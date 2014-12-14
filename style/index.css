@@ -1,0 +1,49 @@
+/*.jumbotron {
+  background: url('images/cobalt.png'); 
+  background-repeat: repeat; 
+  background-color:#0e1333; 
+  height:300px; 
+  background-position:center; 
+}*/
+
+.t {
+  max-width: 100%;
+  height: auto;
+}
+
+.aspectwrapper {
+  display: inline-block; /* shrink to fit */
+  width: 100%;           /* whatever width you like */
+  position: relative;    /* so .content can use position: absolute */
+}
+.aspectwrapper::after {
+  padding-top: 56.25%; /* percentage of containing block _width_ */
+  display: block;
+  content: '';
+}
+.aspectwrapper-inner {
+  position: absolute;
+  top: 0; bottom: 0; right: 0; left: 0;  /* follow the parent's edges */
+  /*outline: thin dashed green;            /* just so you can see the box */
+}
+
+.item {
+    width: 100%;
+    height: 100%;
+}
+
+.item img {
+  width:100%;
+  height:100% !important;
+}
+
+.carousel-caption a {
+  color:#FFF;
+}
+
+.carousel-caption {
+}
+
+/*.thumbnail {
+  min-height: 300px;
+}*/

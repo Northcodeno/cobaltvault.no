@@ -1,0 +1,8 @@
+.col-md-9 img {
+	max-width: 100%;
+	height: auto;
+}
+
+.btn-group li {
+	margin-top:2px;
+}

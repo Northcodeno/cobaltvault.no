@@ -1,0 +1,29 @@
+ErrorDocument 404 /error/404.html
+ErrorDocument 403 /error/403.html
+ErrorDocument 500 /error/500.html 
+
+RewriteEngine On
+#RewriteRule    ^list/\?search\=([A-Za-z0-9-]+)    /list/search/$1  [R=302,L]   # How do I do this?
+RewriteRule    ^list/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$     projectlist.php?$1=$2&$3=$4&$5=$6&$7=$8   [NC,L]
+RewriteRule    ^list/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$                                     projectlist.php?$1=$2&$3=$4&$5=$6         [NC,L]
+RewriteRule    ^list/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$                                                                     projectlist.php?$1=$2&$3=$4               [NC,L]
+RewriteRule    ^list/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$                                                                                                     projectlist.php?$1=$2                     [NC,L]
+RewriteRule    ^list/?$                                             projectlist.php                 [NC,L]
+RewriteRule    ^faq/?$                                              faq.php                         [NC,L]
+RewriteRule    ^project/([A-Za-z0-9-]+)/edit/?$                     project.php?id=$1&edit          [NC,L]
+RewriteRule    ^project/([A-Za-z0-9-]+)/?$                          project.php?id=$1               [NC,L]
+RewriteRule    ^project/([A-Za-z0-9-]+)/manage/?$                   project_edit.php?id=$1          [NC,L]
+RewriteRule    ^project/([A-Za-z0-9-]+)/alter/([A-Za-z0-9-]+)/?$    scripts/project.php?id=$1&a=$2  [NC,L]
+RewriteRule    ^project/([A-Za-z0-9-]+)/alter/([A-Za-z0-9-]+)/([0-9-]+)/?$    scripts/project.php?id=$1&a=$2&map=$3  [NC,L]
+RewriteRule    ^project/([A-Za-z0-9-]+)/alter/([A-Za-z0-9-]+)/([0-9-]+)/([0-9-]+)/?$    scripts/project.php?id=$1&a=$2&map=$3&file=$4  [NC,L]
+RewriteRule    ^create/?$                                           project_create.php              [NC,L]
+RewriteRule    ^userprojects/?$                                     profile_projects.php            [NC,L]
+RewriteRule    ^download/([a-z-]+)/([0-9-]+)/?$                     download.php?type=$1&id=$2      [NC,L]
+RewriteRule    ^user/([A-Za-z0-9-]+)/?$                             profile.php?id=$1               [NC,L]
+
+#RewriteCond %{REMOTE_ADDR} !^194\.153\.180\.156
+#RewriteCond %{REQUEST_URI} !/error/maintenance.html$ [NC]
+#RewriteCond %{REQUEST_URI} !/error/database.html$ [NC]
+#RewriteCond %{REQUEST_URI} !\.(jpe?g?|png|gif|css) [NC]
+#RewriteCond %{REQUEST_URI} !/style/bootstrap.min.css$ [NC]
+#RewriteRule .* /error/maintenance.html [R=302,L]
