@@ -20,7 +20,7 @@ $stmt->close();
 foreach($maps as $m)
 {
 	$stmt = $mysql->prepare("UPDATE projects_files SET pid = ? WHERE mid = ?");
-	$stmt->bind_param('ii',$m[0],$m[1]);
+	$stmt->bind_param('ii',$m[1],$m[0]);
 	$stmt->execute();
 	$stmt->close();
 }
