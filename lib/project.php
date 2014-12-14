@@ -354,34 +354,55 @@ class Project
 	{
 		global $mysql;
 
-		$zip = new ZipArchive();
-		$file = tempnam(PROJECT_TMP_LOCATION, "projectdownload");
-		$zip->open($file,ZipArchive::OVERWRITE);
-		foreach ($this->files as $f)
+		if(sizeof($this->files) == 0)
+			throw new Exception("No file to be downloaded!");
+
+		if(sizeof($this->files) == 1)
 		{
-			if(file_exists($f->getFile()))
-			{
-				if($f->type == 1 || $f->type == 2)
-					$zip->addFile($f->getFile(), "maps/" . $f->filename);
-				elseif($f->type == 3)
-					$zip->addFile($f->getFile(), "daisyMoon/music/" . $f->filename);
-				else
-					$zip->addFile($f->getFile(), "other/" . $f->filename);
-			}
+			$file = $this->files[0];
+
+			// Update Db
+			$stmt = $mysql->prepare("UPDATE projects SET downloads = downloads + 1 WHERE id = ?");
+			$stmt->bind_param('i',$this->id);
+			$stmt->execute();
+			$stmt->close();
+
+			$file->download();
 		}
-		$zip->close();
+		else
+		{
 
-		// Update Db
-		$stmt = $mysql->prepare("UPDATE projects SET downloads = downloads + 1 WHERE id = ?");
-		$stmt->bind_param('i',$this->id);
-		$stmt->execute();
-		$stmt->close();
+			$zip = new ZipArchive();
+			$file = tempnam(PROJECT_TMP_LOCATION, "projectdownload");
+			$zip->open($file,ZipArchive::OVERWRITE);
+			foreach ($this->files as $f)
+			{
+				if(file_exists($f->getFile()))
+				{
+					if($f->type == 1 || $f->type == 2)
+						$zip->addFile($f->getFile(), "maps/" . $f->filename);
+					elseif($f->type == 3)
+						$zip->addFile($f->getFile(), "daisyMoon/music/" . $f->filename);
+					else
+						$zip->addFile($f->getFile(), "other/" . $f->filename);
+				}
+			}
+			$zip->close();
 
-		header('Content-Type: application/zip');
-		header('Content-Length: ' . filesize($file));
-		header('Content-Disposition: attachment; filename="' . $this->name . '.zip"');
-		readfile($file);
-		unlink($file); 
+
+
+			// Update Db
+			$stmt = $mysql->prepare("UPDATE projects SET downloads = downloads + 1 WHERE id = ?");
+			$stmt->bind_param('i',$this->id);
+			$stmt->execute();
+			$stmt->close();
+
+			header('Content-Type: application/zip');
+			header('Content-Length: ' . filesize($file));
+			header('Content-Disposition: attachment; filename="' . $this->name . '.zip"');
+			readfile($file);
+			unlink($file); 
+		}
 	}
 
 	public function prettyAuthors($f = ", ", $url = true)
