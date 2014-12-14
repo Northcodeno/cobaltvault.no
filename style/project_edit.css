@@ -1,0 +1,24 @@
+.list-group-item {
+	padding-bottom: 20px;
+}
+
+.dropzone {
+	border: 10px dashed #ccc;
+	width: 100%;
+	margin: 20px;
+}
+
+.dz-default {
+	text-align: center;
+	margin:30px;
+	font-size: 20pt;
+}
+
+.uploaded-file {
+	margin: 50px;
+	padding: 10px;
+}
+
+#back-button {
+	margin-top:10px;
+}

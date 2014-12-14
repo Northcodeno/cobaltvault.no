@@ -20,8 +20,8 @@ if(!$NC_LOGGED_IN)
 		<div class="alert alert-warning" style="font-size:17px;">
 		<p><b>Read before creating a project!</b></p>
 		<p>Fill in all the fields then hit Create.</p>
-		<p>After you have hit create you will be taken to your project page. From there click "Manage Project" to add a map, after you've created your map start adding your files to it.</p>
-		<p>If you have uploaded all your files and are ready to go, go back to the project page and click "Show Project" to make it visible to the public!</p>
+		<p>After the project has been created you will be taken to the project management page. Drop all your map/localization/music files into the upload dialog and hit the "Back to project" button.</p>
+		<p>The last step is to make the project public so it will show up on the list. If you've done that you're done!</p>
 		<p><i>If you forgot to make your project public you can find it on <?php echo $NC_USERINFO['username']; ?> > My Projects</i></p>
 		</div>
 		</div></div><br>

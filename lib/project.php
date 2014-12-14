@@ -1,5 +1,8 @@
 <?php
 
+require_once($_SERVER['DOCUMENT_ROOT'] . "/resources/connect.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/lib/northcode_api.php");
+
 function unsetValue(array $array, $value, $strict = TRUE)
 {
     if(($key = array_search($value, $array, $strict)) !== FALSE) {
@@ -43,8 +46,8 @@ class Project
 	public $rating_actual;
 	// Url of the thumbnail [First picture in the desc]
 	public $thumbnail_url;
-	// Array of Map objects
-	public $maps;
+	// Array of Files objects
+	public $files;
 	// Version of the format the map has [0=old system,1=new system]
 	public $format_version;
 	// Array of comments
@@ -134,48 +137,24 @@ class Project
 		}
 		$stmt->close();
 
-		/// Map Data
-		$this->maps = array();
-		$stmt = $mysql->prepare("SELECT 
-			projects_maps.id,
-			projects_maps.name,
-			projects_maps.downloads,
-			projects_maps.type,
-			projects_maptypes.name
-			FROM
-			projects_maps
-			LEFT JOIN projects_maptypes ON projects_maptypes.id = projects_maps.type
-			WHERE projects_maps.pid = ?");
+		/// File data
+		$this->files = array();
+		$stmt = $mysql->prepare("SELECT
+			projects_files.id,
+			projects_files.filename,
+			projects_files.type,
+			projects_files_types.name
+			FROM projects_files
+			LEFT JOIN projects_files_types ON projects_files_types.id = projects_files.type
+			WHERE projects_files.pid = ?");
 		$stmt->bind_param('i',$this->id);
 		$stmt->execute();
-		$stmt->bind_result($_id,$_name,$_downloads,$_type,$_typename);
+		$stmt->bind_result($_id,$_filename,$_type,$_typename);
 		while($stmt->fetch())
 		{
-			$this->downloads += $_downloads;
-			$this->maps[] = new Map($_id,$_name,$_downloads,$_type,$_typename);
+			$this->files[] = new File($_id,$_filename,$_type,$_typename);
 		}
 		$stmt->close();
-
-		/// File data
-		foreach($this->maps as $map)
-		{
-			$stmt = $mysql->prepare("SELECT
-				projects_files.id,
-				projects_files.filename,
-				projects_files.type,
-				projects_files_types.name
-				FROM projects_files
-				LEFT JOIN projects_files_types ON projects_files_types.id = projects_files.type
-				WHERE projects_files.mid = ?");
-			$stmt->bind_param('i',$map->id);
-			$stmt->execute();
-			$stmt->bind_result($_id,$_filename,$_type,$_typename);
-			while($stmt->fetch())
-			{
-				$map->files[] = new File($_id,$_filename,$_type,$_typename);
-			}
-			$stmt->close();
-		}
 
 		/// Comments
 		$this->comments = array();
@@ -229,18 +208,13 @@ class Project
 
 	public function delete()
 	{
-		foreach($this->maps as $map)
+		foreach($this->files as $f)
 		{
-			foreach($Map->files as $f)
-			{
-				$map->delFile($f->id);
-			}
-			$stmt = $mysql->prepare("DELETE FROM projects_files WHERE mid = ?");
-			$stmt->bind_param('i',$map->id);
-			$stmt->execute();
-			$stmt->close();
+			$this->delFile($f->id);
 		}
-		$stmt = $mysql->prepare("DELETE FROM projects_maps WHERE pid = ?");
+
+		// Just to make sure
+		$stmt = $mysql->prepare("DELETE FROM projects_files WHERE pid = ?");
 		$stmt->bind_param('i',$this->id);
 		$stmt->execute();
 		$stmt->close();
@@ -253,51 +227,6 @@ class Project
 		$this->destroy();
 	}
 
-	public function addMap($name)
-	{
-		global $mysql;
-
-		// Block multiple maps
-		$stmt = $mysql->prepare("SELECT id FROM projects_maps WHERE pid = ?");
-		$stmt->bind_param('i',$this->id);
-		$stmt->execute();
-		if($stmt->num_rows >= 1)
-			_error("As of now you can only have one map per project!<br>This will change soon!");
-		$stmt->close();
-
-		$stmt = $mysql->prepare("INSERT INTO projects_maps (pid,name,type) VALUES (" . $this->id . ",?,13)");
-		$stmt->bind_param('s',$name);
-		$stmt->execute();
-		$this->maps[] = new Map($stmt->insert_id,$name,null,null);
-		$stmt->close();
-	}
-
-	public function delMap($id)
-	{
-		global $mysql;
-		
-		$Map;
-		foreach($this->maps as $m)
-		{
-			if($m->id == $id)
-			{
-				$Map = $m;
-				break;
-			}
-		}
-
-		foreach($Map->files as $f)
-		{
-			$Map->delFile($f->id);
-		}
-
-		$stmt = $mysql->prepare("DELETE FROM projects_maps WHERE id = ?");
-		$stmt->bind_param('i',$Map->id);
-		$stmt->execute();
-		$stmt->close();
-
-		$this->maps = unsetValue($this->maps, $Map, TRUE);
-	}
 
 	// INFO: Not tested
 	public function rate($user, $val, $text = "")
@@ -428,19 +357,16 @@ class Project
 		$zip = new ZipArchive();
 		$file = tempnam(PROJECT_TMP_LOCATION, "projectdownload");
 		$zip->open($file,ZipArchive::OVERWRITE);
-		foreach ($this->maps as $map)
+		foreach ($this->files as $f)
 		{
-			foreach($map->files as $f)
+			if(file_exists($f->getFile()))
 			{
-				if(file_exists($f->getFile()))
-				{
-					if($f->type == 1 || $f->type == 2)
-						$zip->addFile($f->getFile(), "maps/" . $f->filename);
-					elseif($f->type == 3)
-						$zip->addFile($f->getFile(), "daisyMoon/music/" . $f->filename);
-					else
-						$zip->addFile($f->getFile(), "other/" . $f->filename);
-				}
+				if($f->type == 1 || $f->type == 2)
+					$zip->addFile($f->getFile(), "maps/" . $f->filename);
+				elseif($f->type == 3)
+					$zip->addFile($f->getFile(), "daisyMoon/music/" . $f->filename);
+				else
+					$zip->addFile($f->getFile(), "other/" . $f->filename);
 			}
 		}
 		$zip->close();
@@ -494,28 +420,13 @@ class Project
 		return 0;
 	}
 
-	public function findMapById($mapid)
-	{
-		foreach($this->maps as $map)
-		{
-			if($map->id == $mapid)
-				return $map;
-		}
-
-		throw new Exception("Map not found!");
-	}
-
 	public function findFileById($fileid)
 	{
-		foreach($this->maps as $map)
+		foreach($this->files as $file)
 		{
-			foreach($map->files as $file)
-			{
-				if($file->id == $fileid)
-					return $file;
-			}
+			if($file->id == $fileid)
+				return $file;
 		}
-
 		throw new Exception("File not found!");
 	}
 
@@ -602,26 +513,12 @@ class Project
 		return $data;
 	}
 
-	public static function getProjectFromMap($mapid)
-	{
-		global $mysql;
-
-		$stmt = $mysql->prepare("SELECT projects.id FROM projects LEFT JOIN projects_maps ON projects_maps.id = ? WHERE projects_maps.pid = projects.id");
-		$stmt->bind_param('i', $mapid);
-		$stmt->execute();
-		$stmt->bind_result($id);
-		$stmt->fetch();
-		$PID = $id;
-		$stmt->close();
-
-		return new Project($PID);
-	}
 
 	public static function getProjectFromFile($fileid)
 	{
 		global $mysql;
 
-		$stmt = $mysql->prepare("SELECT projects.id FROM projects LEFT JOIN projects_files ON projects_files.id = ? LEFT JOIN projects_maps ON projects_maps.id = projects_files.mid WHERE projects_maps.pid = projects.id");
+		$stmt = $mysql->prepare("SELECT projects.id FROM projects LEFT JOIN projects_files ON projects_files.id = ? WHERE projects_files.pid = projects.id");
 		$stmt->bind_param('i', $fileid);
 		$stmt->execute();
 		$stmt->bind_result($id);
@@ -632,73 +529,12 @@ class Project
 		return new Project($PID);
 	}
 
-}
 
-class Map
-{
-	public $id;
-	// Map name
-	public $name;
-	// Array of File objects
-	public $files;
-	// Amount of downloads
-	public $downloads;
-	// Map type
-	public $type;
-	public $type_name;
-
-	// Constructor
-	public function __construct($id,$name,$downloads,$type,$type_name)
-	{
-		$this->id = $id;
-		$this->name = $name;
-		$this->downloads = $downloads;	
-		$this->type = $type;
-		$this->type_name = $type_name;
-		$this->files = array();
-	}
-
-	// Downloads a zip
-	// Must be called without sending headers!
-	public function download()
-	{
-		global $mysql;
-		
-		// Prepare File
-		$file = tempnam(PROJECT_TMP_LOCATION, "mapdownload");
-		$zip = new ZipArchive();
-		$zip->open($file, ZipArchive::OVERWRITE);
-
-		// Stuff with content
-		foreach ($this->files as $f)
-		{
-			$zip->addFile($f->getFile(), "/" . $f->filename);
-		}
-
-		// Close and send to users
-		$zip->close();
-
-		// Update Db
-		$stmt = $mysql->prepare("UPDATE projects_maps SET downloads = downloads + 1 WHERE id = ?");
-		$stmt->bind_param('i',$this->id);
-		$stmt->execute();
-		$stmt->close();
-
-		header('Content-Type: application/zip');
-		header('Content-Length: ' . filesize($file));
-		header('Content-Disposition: attachment; filename="' . $this->name . '.zip"');
-		readfile($file);
-		unlink($file); 
-
-		return 0;
-	}
-
-	// START: Functions for files
-
-	// Adds a file to the map [NOT TESTED]
 	public function addFile($POST_FILE)
 	{
 		global $mysql;
+
+		$returnText = "Sucessfully added File";
 
 		// Check if the file upload hasn't any errors
 		if ($POST_FILE["error"] > 0)
@@ -715,13 +551,13 @@ class Map
 		{
 			case "map":
 				$File->type = 1;
-				if($this->containsFileType(1))
-					throw new Exception("Map can only contain one map file. Please use the updateFile method to update it.");
+				//if($this->containsFileType(1))
+				//	throw new Exception("Map can only contain one map file. Please use the updateFile method to update it.");
 				break;
 			case "localization":
 				$File->type = 2;
-				if($this->containsFileType(2))
-					throw new Exception("Map can only contain one localization file. Please use the updateFile method to update it.");
+				//if($this->containsFileType(2))
+				//	throw new Exception("Map can only contain one localization file. Please use the updateFile method to update it.");
 				break;
 			case "ogg":
 				$File->type = 3;
@@ -736,12 +572,26 @@ class Map
 
 		$File->filename = $POST_FILE['name'];
 
+		// Check if File already exists
+		foreach($this->files as $f)
+		{
+			if($f->filename == $File->filename)
+			{
+				$this->delFile($f->id);
+				$returnText = "Sucessfully updated File";
+				break;
+			}
+		}
+
 		// Insert the record to db
-		$stmt = $mysql->prepare("INSERT INTO projects_files (mid,filename,type) VALUES (?,?,?)");
+		$stmt = $mysql->prepare("INSERT INTO projects_files (pid,filename,type) VALUES (?,?,?)");
 		$stmt->bind_param('isi',$this->id,$File->filename,$File->type);
 		$stmt->execute();
 		$File->id = $stmt->insert_id;
 		$stmt->close();
+
+		if($mysql->error)
+			throw new Exception($mysql->error);
 
 		// Define filename and target
 		$File->filename = $POST_FILE["name"];
@@ -752,69 +602,8 @@ class Map
 
 		// Add file to array for further use
 		$this->files[] = $File;
-	}
 
-	public function addLocalizationFromString($localization = "")
-	{
-		global $mysql;
-
-		if($this->containsFileType(2))
-			throw new Exception("Map can only contain one localization file. Please use the updateLocalizationFromString method to update it.");
-
-
-		$File = new File();
-		$File->type = 2;
-		
-		// Get filename
-		$f = $this->containsFileType(1);	
-		if(!$f)
-			throw new Exception("You cannot add a localization from a string if you don't have a map file!");
-		$tmp = explode(".",$f->filename);
-		$tmp[sizeof($tmp) - 1] = "localization";
-		$File->filename = implode(".",$tmp);
-
-		// Insert the record to db
-		$stmt = $mysql->prepare("INSERT INTO projects_files (mid,filename,type) VALUES (?,?,?)");
-		$stmt->bind_param('isi',$this->id,$File->filename,$File->type);
-		$stmt->execute();
-		$File->id = $stmt->insert_id;
-		$stmt->close();
-
-
-		// write to file
-		$localization = stripcslashes($localization);
-		$fh = fopen($File->getFile(),"w");
-		if($fh == false)
-			throw new Exception("Could not create file!");
-		fwrite($fh,$localization);
-		fclose($fh);
-	}
-
-	public function updateLocalizationFromString($localization = "")
-	{
-		global $mysql;
-
-		$File = $this->containsFileType(2);
-
-		if(!$loc)
-			throw new Exception("Map doesn't contain localization file. Please use the addLocalizationFromString method to add it.");
-
-		unlink($File->getFile());
-		$fh = fopen($File->getFile(),"w");
-		if($fh == false)
-			throw new Exception("Could not create file!");
-		fwrite($fh,$localization);
-		fclose($fh);
-	}
-
-	public function updateFile($id,$POST_FILE)
-	{
-		// Check if the file upload hasn't any errors
-		if ($POST_FILE["error"] > 0)
-			throw new Exception("File upload error: " . $POST_FILE["error"]);
-
-		delFile($id);
-		updateFile($POST_FILE);
+		return $returnText;
 	}
 
 	public function delFile($id)
@@ -845,20 +634,15 @@ class Map
 		$this->files = unsetValue($this->files, $File, TRUE);
 	}
 
-	// END
-
-	public function containsFileType($typeId)
+	public function updateFile($id, $POST_FILE)
 	{
-		foreach($this->files as $f)
-		{
-			if($f->type == $typeId)
-				return $f;
-		}
+		// Check if the file upload hasn't any errors
+		if ($POST_FILE["error"] > 0)
+			throw new Exception("File upload error: " . $POST_FILE["error"]);
 
-		return false;
+		delFile($id);
+		addFile($POST_FILE);
 	}
-
-
 
 }
 
@@ -966,7 +750,7 @@ class File
 
 	public function download_zip()
 	{
-
+		throw new Exception("Not implemented");
 	}
 }
 
