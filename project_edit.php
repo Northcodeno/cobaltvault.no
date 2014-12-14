@@ -67,5 +67,18 @@ $i = 0;
 
 	<script src="/scripts/dropzone.js"></script>
 	<script src="/scripts/project_edit.js"></script>
+	<script>
+	Dropzone.options.fileUploads = {
+		init: function() {
+			this.on("success", function(file, responseText) {
+				file.previewElement.querySelector(".progress").className = "progress";
+				file.previewElement.querySelector(".responseText").textContent = responseText;
+				$.get('/ajax/project_file_list.php?id=<?php echo $Project->id; ?>', function(data) {
+					$("#file-list").html(data);
+				});
+			});
+		}
+	}
+</script>
 
 </body>
