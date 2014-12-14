@@ -97,25 +97,14 @@ try
 
 		case "addfile":
 			/// Adds a File to a map; File parameter is named "file"
-			if(isset($_GET['map']))
+			try
 			{
-				$m;
-				foreach($Project->maps as $map)
-				{
-					if($map->id == $_GET['map'])
-					{
-						$m = $map;
-						break;
-					}
-				}
-				if(!isset($m))
-					throw new Exception("Map not found in Project");
-				$m->addFile($_FILES['file']);
-				alert("File added!");
+				$result = $Project->addFile($_FILES['file']);
+				exit($result);
 			}
-			else
+			catch (Exception $ex)
 			{
-				throw new Exception("No map specified!");
+				exit("Error: $ex");
 			}
 			break;
 
@@ -136,19 +125,10 @@ try
 			break;
 
 		case "delfile":
-			if(!isset($_GET['map']) || !isset($_GET['file']))
+			if(!isset($_GET['file']))
 				throw new Exception("Missing data");
-			$Map = getMap($Project,$_GET['map']);
-			$Map->delFile($_GET['file']);
+			$Project->delFile($_GET['file']);
 			alert("File deleted!");
-			break;
-
-		case "addmap":
-			if(!isset($_POST['name']) || $_POST['name'] == "")
-				throw new Exception("Map name missing!");
-
-			$Project->addMap($purifier->purify($_POST['name']));
-			alert("Map added! <br>Start adding files to the map now!");
 			break;
 
 		case "addloc":
@@ -157,13 +137,6 @@ try
 			$Map = getMap($Project,$_GET['map']);
 			$Map->addLocalizationFromString($_POST['loc']);
 			alert("Localization added!");
-			break;
-
-		case "delmap":
-			if(!isset($_GET['map']))
-				throw new Exception("Missing data");
-			$Project->delMap($_GET['map']);
-			alert("Map deleted!");
 			break;
 
 		case "rate":

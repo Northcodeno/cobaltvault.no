@@ -1,5 +1,43 @@
+
+<script src="dropzone.js"></script>
+
+
+<button id="submit-all">Submit</button>
+<form action="test.php" enctype="multipart/form-data" method="post" class="dropzone" id="testdropzone">
+	<div class="dropzone-previews"></div>
+	<div class="fallback">
+		<input name="file[]" type="file" multiple />
+	</div>
+</form>
+
+<script>
+
+Dropzone.options.testdropzone = {
+	autoProcessQueue: false,
+
+	init: function() {
+		var submitButton = document.querySelector("#submit-all")
+			testdropzone = this;
+
+		submitButton.addEventListener("click", function() {
+			testdropzone.autoProcessQueue();
+		});
+	}
+}
+
+</script>
+
+<pre>
 <?php
 
+var_dump($_POST);
+var_dump($_GET);
+var_dump($_FILES);
+
+?>
+</pre>
+<?php
+/*
 $array = range(1,10);
 
 function manipulate(&$arr)
@@ -12,7 +50,7 @@ manipulate($array);
 echo '<pre>';
 print_r($array);
 echo '</pre>';
-
+*/
 /**
  * Generate authorization headers
  *

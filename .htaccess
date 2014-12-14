@@ -21,7 +21,7 @@ RewriteRule    ^userprojects/?$                                     profile_proj
 RewriteRule    ^download/([a-z-]+)/([0-9-]+)/?$                     download.php?type=$1&id=$2      [NC,L]
 RewriteRule    ^user/([A-Za-z0-9-]+)/?$                             profile.php?id=$1               [NC,L]
 
-#RewriteCond %{REMOTE_ADDR} !^194\.153\.180\.156
+#RewriteCond %{REMOTE_ADDR} !^81\.62\.30\.203
 #RewriteCond %{REQUEST_URI} !/error/maintenance.html$ [NC]
 #RewriteCond %{REQUEST_URI} !/error/database.html$ [NC]
 #RewriteCond %{REQUEST_URI} !\.(jpe?g?|png|gif|css) [NC]

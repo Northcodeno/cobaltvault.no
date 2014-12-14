@@ -113,7 +113,7 @@ echo "</pre>";
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" data-parent="#accordion_maps" href="#collapse_maps">
-								Maps <span class="caret"></span>
+								Files <span class="caret"></span>
 							</a>
 						</h4>
 					</div>
@@ -122,9 +122,9 @@ echo "</pre>";
 							<ul class="nav nav-pills nav-stacked">
 								<div class="btn-group btn-block">
 									<?php
-									foreach($Project->maps as $map)
+									foreach($Project->files as $file)
 									{
-										?><li><a href="/download/map/<?php echo $map->id; ?>" class="btn btn-info btn-block">Download <?php echo $map->name; ?></a></li><?php
+										?><li><a href="/download/file/<?php echo $file->id; ?>" class="btn btn-info btn-block">Download <?php echo $file->filename; ?></a></li><?php
 									}
 									?>
 								</div>
@@ -135,79 +135,82 @@ echo "</pre>";
 			</div>
 
 			<br/>
-			<table class="table">
-				<tr>
-					<td>Date Created</td>
-					<td><?php echo $Project->date_created; ?></td>
-				</tr>
-				<tr>
-					<td>Map Type</td>
-					<td>
-					<?php 
-					if($edit)
-					{
-						echo '<select name="type" class="form-control">';
-						$type_res = $mysql->query("SELECT * FROM projects_maptypes");
-						while($type_row = $type_res->fetch_array())
+			<div class="panel panel-default">
+				<div class="panel-heading">Info</div>
+				<table class="table table-bordered">
+					<tr>
+						<td>Date Created</td>
+						<td><?php echo $Project->date_created; ?></td>
+					</tr>
+					<tr>
+						<td>Map Type</td>
+						<td>
+						<?php 
+						if($edit)
 						{
-							$type_add = "";
-							if($type_row["id"] == $Project->type)
-								$type_add = "selected";
-							echo '<option '.$type_add.' value="'.$type_row["id"].'">'.$type_row['name'].'</option>';
+							echo '<select name="type" class="form-control">';
+							$type_res = $mysql->query("SELECT * FROM projects_maptypes");
+							while($type_row = $type_res->fetch_array())
+							{
+								$type_add = "";
+								if($type_row["id"] == $Project->type)
+									$type_add = "selected";
+								echo '<option '.$type_add.' value="'.$type_row["id"].'">'.$type_row['name'].'</option>';
+							}
+							echo '</select>';
+						} else {
+							echo $Project->typename; 
 						}
-						echo '</select>';
-					} else {
-						echo $Project->typename; 
-					}
-					?>
-					</td>
-				</tr>
-				<tr>
-					<td>Last Update</td>
-					<td><?php echo $Project->date_modified; ?></td>
-				</tr>
-				<tr>
-					<td>Rating</td>
-					<td>
-						<div class="starRate">
-							<?php 
-							$rating = $Project->rating;
-							$rating_r = intval($Project->rating);
+						?>
+						</td>
+					</tr>
+					<tr>
+						<td>Last Update</td>
+						<td><?php echo $Project->date_modified; ?></td>
+					</tr>
+					<tr>
+						<td>Rating</td>
+						<td>
+							<div class="starRate">
+								<?php 
+								$rating = $Project->rating;
+								$rating_r = intval($Project->rating);
 
-							?>
-							<div>Rating: <?php echo number_format($Project->rating,1); ?><b></b></div>
-							<ul>
-								<li><a href="/project/<?php echo $Project->id; ?>/alter/rate/5"><span>Rate 5</span><?php if($rating_r == 5) { echo "<b></b>"; } ?></a></li>
-								<li><a href="/project/<?php echo $Project->id; ?>/alter/rate/4"><span>Rate 4</span><?php if($rating_r == 4) { echo "<b></b>"; } ?></a></li>
-								<li><a href="/project/<?php echo $Project->id; ?>/alter/rate/3"><span>Rate 3</span><?php if($rating_r == 3) { echo "<b></b>"; } ?></a></li>
-								<li><a href="/project/<?php echo $Project->id; ?>/alter/rate/2"><span>Rate 2</span><?php if($rating_r == 2) { echo "<b></b>"; } ?></a></li>
-								<li><a href="/project/<?php echo $Project->id; ?>/alter/rate/1"><span>Rate 1</span><?php if($rating_r == 1) { echo "<b></b>"; } ?></a></li>
-							</ul>
-						</div>
-						<?php /*echo $Project['rating_count']; ?> rating<?php if($Project['rating_count'] > 1 || $Project['rating_count'] == 0) echo "s"; */ ?>
-					</td>
-				</tr>
-				<!--<tr>
-					<td>Version</td>
-					<td>
-					<?php /*
-					if($edit)
-						echo '<input type="text" name="ver" class="form-control" value="'.$Project['version'].'"/>';
-					else
-						echo $Project->version; 
-					*/ ?>
+								?>
+								<div>Rating: <?php echo number_format($Project->rating,1); ?><b></b></div>
+								<ul>
+									<li><a href="/project/<?php echo $Project->id; ?>/alter/rate/5"><span>Rate 5</span><?php if($rating_r == 5) { echo "<b></b>"; } ?></a></li>
+									<li><a href="/project/<?php echo $Project->id; ?>/alter/rate/4"><span>Rate 4</span><?php if($rating_r == 4) { echo "<b></b>"; } ?></a></li>
+									<li><a href="/project/<?php echo $Project->id; ?>/alter/rate/3"><span>Rate 3</span><?php if($rating_r == 3) { echo "<b></b>"; } ?></a></li>
+									<li><a href="/project/<?php echo $Project->id; ?>/alter/rate/2"><span>Rate 2</span><?php if($rating_r == 2) { echo "<b></b>"; } ?></a></li>
+									<li><a href="/project/<?php echo $Project->id; ?>/alter/rate/1"><span>Rate 1</span><?php if($rating_r == 1) { echo "<b></b>"; } ?></a></li>
+								</ul>
+							</div>
+							<?php /*echo $Project['rating_count']; ?> rating<?php if($Project['rating_count'] > 1 || $Project['rating_count'] == 0) echo "s"; */ ?>
+						</td>
+					</tr>
+					<!--<tr>
+						<td>Version</td>
+						<td>
+						<?php /*
+						if($edit)
+							echo '<input type="text" name="ver" class="form-control" value="'.$Project['version'].'"/>';
+						else
+							echo $Project->version; 
+						*/ ?>
 
-					</td>
-				</tr>-->
-				<tr>
-					<td>Downloads</td>
-					<td><?php echo $Project->downloads; ?></td>
-				</tr>
-				<tr>
-					<td>Authors</td>
-					<td><?php echo $Project->prettyAuthors("<br />"); ?></td>
-				</tr>
-			</table>
+						</td>
+					</tr>-->
+					<tr>
+						<td>Downloads</td>
+						<td><?php echo $Project->downloads; ?></td>
+					</tr>
+					<tr>
+						<td>Authors</td>
+						<td><?php echo $Project->prettyAuthors("<br />"); ?></td>
+					</tr>
+				</table>
+			</div>
 			<ul class="nav nav-pills nav-stacked">
 				<div class="btn-group btn-block">
 				<?php if($owner && !$edit) { ?>
@@ -218,8 +221,6 @@ echo "</pre>";
 				<li><a class="btn btn-success btn-block" href="/project/<?php echo $Project->id; ?>/alter/public">Show Project</a></li>
 				<?php } ?>
 				<li><a href="#modal_delete" data-toggle="modal" class="btn btn-danger btn-block">Delete</a></li>
-				<br/><b>Upload new version</b>
-				<br/><a href="#modal_uploadfile" data-toggle="modal" class="btn btn-default btn-block">Upload new Version</a>
 				<?php } if($edit) { ?>
 				<li><input type="submit" value="Save" class="btn btn-success btn-block" /></li>
 				<?php }?>
