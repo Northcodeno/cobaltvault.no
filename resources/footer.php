@@ -11,7 +11,7 @@
 
 <div class="footer">
 	<div class="container">
-		Copyright <a href="http://northcode.no/">Northcode</a> 2014 | Contact: <a href="mailto:jens@northcode.no">jens@northcode.no</a><br><br>
+		OpenSource | Copyright <a href="http://northcode.no/">Northcode</a> 2014 | Contact: <a href="mailto:jens@northcode.no">jens@northcode.no</a> | <a href="https://github.com/Jenjen1324/cobaltvault.no">GitHub</a><br><br>
 
 		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 		<input type="hidden" name="cmd" value="_s-xclick">
