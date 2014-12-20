@@ -52,7 +52,7 @@ $maps_count = $_maps_r->num_rows;
                             <a href="#" data-toggle="dropdown">Help<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/faq">FAQ</a>
-                                <li><a href="http://bugs.cobaltvault.no" target="_blank">Bug Tracker</a></li>
+                                <li><a href="https://github.com/Jenjen1324/cobaltvault.no" target="_blank">GitHub</a></li>
                                 <li class="divider"></li>
                                 <li><a href="http://www.northcode.no/" target="_blank">Northcode</a></li>
                                 <li><a href="http://www.cobaltforum.net/topic/2701-cobalt-vault-upload-and-share-your-maps/" target="_blank">CobaltForum Thread</a></li>

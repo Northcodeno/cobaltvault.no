@@ -52,7 +52,7 @@ if(!$NC_LOGGED_IN)
 						} 
 						?>
 					</select>
-					<p class="help-block">Choose your map type. If you choose Map-Pack you are able add multiple maps to your project!</p>
+					<p class="help-block">Choose your map type.</p>
 				</div>
 			</div>
 			<div class="form-group">

@@ -207,7 +207,13 @@ echo "</pre>";
 					</tr>
 					<tr>
 						<td>Authors</td>
-						<td><?php echo $Project->prettyAuthors("<br />"); ?></td>
+						<td><?php /*if(!$edit) { */echo $Project->prettyAuthors("<br />"); /*} else { 
+							foreach($Project->authors as $a)
+							{
+								// Do some fancy stuff here
+							}
+							// Addition of authors
+							}*/ ?></td>
 					</tr>
 				</table>
 			</div>

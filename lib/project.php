@@ -431,6 +431,37 @@ class Project
 		return $str;
 	}
 
+	public function addAuthor($uid)
+	{
+		global $mysql;
+
+		if(isAuthor($uid))
+		{
+			throw new Exception("This user is already an Author");
+		}
+
+		$stmt = $mysql->prepare("INSERT INTO projects_authors (`pid`,`uid`) VALUES (?,?)");
+		$stmt->bind_param('ii',$this->id, $uid);
+		$stmt->execute();
+		$stmt->close();
+	}
+
+	public function delAuthor($uid)
+	{
+		global $mysql;
+
+		if(!isAuthor($uid))
+			throw new Exception("This user isn't an Author");
+
+		if(sizeof($this->authors) == 1)
+			throw new Exception("You can't remove the last Author");
+
+		$stmt = $mysql->prepare("DELETE FROM projects_authors WHERE pid = ? AND uid = ?");
+		$stmt->bind_param('ii', $this->id, $uid);
+		$stmt->execute();
+		$stmt->close();
+	}
+
 	public function isAuthor($uid)
 	{
 		foreach($this->authors as $a)

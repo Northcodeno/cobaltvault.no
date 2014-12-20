@@ -162,6 +162,20 @@ try
 			$Project->delComment($_GET['cid'], $userinfo['uid']);
 			alert("Comment deleted");
 			break;
+
+		case "addauthor":
+			if(!isset($_POST['uid']))
+				throw new Exception("Missing data");
+			$Project->addAuthor($_POST['uid']);
+			alert("Author added");
+			break;
+
+		case "delauthor":
+			if(!isset($_GET['uid']))
+				throw new Exception("Missing data");
+			$Project->delauthor($_GET['uid']);
+			alert("Removed author");
+			break;
 	}
 
 }
