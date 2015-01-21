@@ -9,8 +9,8 @@ function sendMail($subject, $message, $toAddress, $toName, $rootDirectory = ".",
 	$mail->CharSet = "UTF-8";
 	$mail->Host = "outgoing-smtp49s.stwadmin.net";
 	$mail->SMTPAuth = true;
-	$mail->Username = "jens@northcode.no"; // Has to be changed
-	$mail->Password = "y-dfgh10-."; // Has to be changed
+	$mail->Username = $mail->Username;
+	$mail->Password = $mail->Password;
 	$mail->SMTPDebug = 0;
 
 	$mail->From = "contact@northcode.no";
