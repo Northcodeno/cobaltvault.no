@@ -104,12 +104,7 @@ function toDo()
 }
 function carousel($i,$order = "downloads DESC")
 {
-    $Projects = Project::getProjects("
-    public = '1' 
-    AND thumbnail_url != '' 
-    AND thumbnail_url IS NOT NULL 
-    "//AND date_modified > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 28 DAY)"
-    , $order, $i);
+    $Projects = Project::getFeaturedProjects();
     $i = sizeof($Projects);
     ?>
     <div id="carousel-maps" class="carousel slide" data-ride="carousel">

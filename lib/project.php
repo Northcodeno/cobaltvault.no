@@ -590,6 +590,27 @@ class Project
 		return $data;
 	}
 
+	public static function getFeaturedProjects()
+	{
+		global $mysql;
+
+		$pids = array();
+		$projects = array();
+
+		$stmt = $mysql->prepare("SELECT pid FROM projects_featured");
+		$stmt->execute();
+		$stmt->bind_result($pid);
+		while($stmt->fetch())
+			$pids[] = $pid;
+
+		$stmt->close();
+
+		foreach($pids as $p)
+			$projects[] = new Project($p);
+
+		return $projects;
+	}
+
 
 	public static function getProjectFromFile($fileid)
 	{
