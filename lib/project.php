@@ -256,7 +256,7 @@ class Project
 		$stmt->execute();
 		$stmt->close();
 	}
-	
+
 	public function comment($author,$content, $reply = 0)
 	{
 		global $mysql;
@@ -341,7 +341,7 @@ class Project
 						<input type="submit" class="btn btn-primary" value="Reply" />
 					</form>
 					</div>
-					
+
 					<?php $this->displayComments($comment->replies); ?>
 
 				</div>
@@ -401,7 +401,7 @@ class Project
 			header('Content-Length: ' . filesize($file));
 			header('Content-Disposition: attachment; filename="' . $this->name . '.zip"');
 			readfile($file);
-			unlink($file); 
+			unlink($file);
 		}
 	}
 
@@ -481,6 +481,18 @@ class Project
 		}
 		throw new Exception("File not found!");
 	}
+
+  public function getFilesByType($type)
+  {
+    $files = array();
+    foreach($this->files as $f)
+    {
+      if($f->type == $type)
+        $files[] = $f;
+    }
+
+    return $files;
+  }
 
 	/*
 	 $data contains:
@@ -712,11 +724,11 @@ class File
 		$this->file_location = PROJECT_FILES_SINGLE_LOCATION;
 
 
-		$a = func_get_args(); 
-        $i = func_num_args(); 
-        if (method_exists($this,$f='__construct'.$i)) { 
-            call_user_func_array(array($this,$f),$a); 
-        } 
+		$a = func_get_args();
+        $i = func_num_args();
+        if (method_exists($this,$f='__construct'.$i)) {
+            call_user_func_array(array($this,$f),$a);
+        }
 	}
 
 	public function __construct4($id,$filename,$type,$type_name)
