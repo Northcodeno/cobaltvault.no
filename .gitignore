@@ -4,6 +4,7 @@ scripts/tinymce
 lib/HtmlPurifier
 lib/PHPMailer
 lib/northcode_api.php
+lib/mail.php
 
 ## Sublime Text
 
