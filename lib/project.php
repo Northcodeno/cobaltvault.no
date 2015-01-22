@@ -208,6 +208,8 @@ class Project
 
 	public function delete()
 	{
+		global $mysql;
+
 		foreach($this->files as $f)
 		{
 			$this->delFile($f->id);
@@ -219,12 +221,23 @@ class Project
 		$stmt->execute();
 		$stmt->close();
 
+		// Ratings
+		$stmt = $mysql->prepare("DELETE FROM projects_rating WHERE pid = ?");
+		$stmt->bind_param('i',$this->id);
+		$stmt->execute();
+		$stmt->close();
+
+		// Authors
+		$stmt = $mysql->prepare("DELETE FROM projects_authors WHERE pid = ?");
+		$stmt->bind_param('i',$this->id);
+		$stmt->execute();
+		$stmt->close();
+
 		$stmt = $mysql->prepare("DELETE FROM projects WHERE id = ?");
 		$stmt->bind_param('i',$this->id);
 		$stmt->execute();
 		$stmt->close();
 
-		$this->destroy();
 	}
 
 

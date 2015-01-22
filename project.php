@@ -6,8 +6,14 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/resources/prehead.php");
 if(!isset($_GET['id']))
 	alert("Project not found!","danger","/list");
 $id = mysql_escape_string($_GET['id']);
-
-$Project = new Project($_GET['id']);
+try
+{
+	$Project = new Project($_GET['id']);
+}
+catch (Exception $ex)
+{
+	_error($ex);
+}
 $edit = isset($_GET['edit']);
 $owner = 0;
 if($NC_LOGGED_IN)
