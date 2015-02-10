@@ -86,7 +86,6 @@ function toDo()
                 <div class="panel-body">
                     <ol>
                         <li>Multiple Authors</li>
-                        <li>Better Map Uploading system</li>
                         <li>Custom Soundtrack Integration</li>
                         <li>API (for applications)</li>
                         <li>More...</li>
