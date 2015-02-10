@@ -109,8 +109,15 @@ echo "</pre>";
 			<!-- Project Download -->
 			<ul class="nav nav-pills nav-stacked">
 				<div class="btn-group btn-block">
-					<li><a href="<?php if(0) echo ADFLY; ?>/download/project/<?php echo $Project->id; ?>" class="btn btn-primary btn-block">Download Project</a></li>
-					<?php if($owner) { ?><li><a href="/project/<?php echo $Project->idname; ?>/manage" class="btn btn-warning btn-block">Manage Project</a></li><?php } ?>
+					<?php
+					if(sizeof($Project->files) > 0) {
+					?>
+					<li><a href="/download/project/<?php echo $Project->id; ?>" class="btn btn-primary btn-block">Download Project</a></li>
+					<?php 
+					} else { ?>
+					<li><a href="#" class="btn btn-danger btn-block">No Files Available</a></li>
+					<?php }
+					 if($owner) { ?><li><a href="/project/<?php echo $Project->idname; ?>/manage" class="btn btn-warning btn-block">Manage Project</a></li><?php } ?>
 				</div>
 			</ul><br>
 			<!-- Map Collapse -->
