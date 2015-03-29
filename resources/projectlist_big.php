@@ -25,6 +25,11 @@ pagination($page,$last_page);
 
 function printRating($val)
 {
+	if(!$val)
+		echo '-';
+	else
+		echo $val;
+	/*
 	?>
 	<div class="starRatePassive">
 	<?php
@@ -35,7 +40,7 @@ function printRating($val)
 	else
 		$val = number_format($val,1);
 	?>
-	<div><!--Rating: <?php echo $val; ?>--><b></b></div>
+	<div><!--Rating: <?php echo $val; ?> --><b></b></div>
 	<ul>
 		<li><a href="#"><?php if($rating_r == 5) { echo "<b></b>"; } ?></a></li>
 		<li><a href="#"><?php if($rating_r == 4) { echo "<b></b>"; } ?></a></li>
@@ -46,12 +51,14 @@ function printRating($val)
 	</div>
 	<?php echo $val; ?>
 	<?php
+	*/
 }
 
 ?>
 
 
-<table class="table">
+<table class="table table-striped">
+<thead>
 <tr>
 	<th><a href="<?php echo getGETLinks(array("order" => "name")); ?>">Name</a></th>
 	<th></th>
@@ -63,6 +70,8 @@ function printRating($val)
 	<th><a href="<?php echo getGETLinks(array("order" => "updated")); ?>">Updated</a></th>
 	<th><span class="glyphicon glyphicon-cloud-download"></span></th>
 </tr>
+</thead>
+<tbody>
 <?php
 
 $limit = ($page - 1) * ITEMS_PER_PAGE . ',' . ITEMS_PER_PAGE;
@@ -75,7 +84,7 @@ foreach($Projects as $P) // Data loop
 {
 	?>
 	<tr>
-		<td class="c_thumbnail"><?php if($P->thumbnail_url) { ?><a href="/project/<?php echo $P->idname; ?>"><img src="<?php echo $P->thumbnail_url; ?>" alt="<?php echo $P->name; ?>"></a><?php } ?></td>
+		<td class="c_thumbnail"><?php if($P->thumbnail_url && $P->thumbnail_url != "") { ?><a href="/project/<?php echo $P->idname; ?>"><img src="<?php echo $P->thumbnail_url; ?>" alt="<?php echo $P->name; ?>"></a><?php } ?></td>
 		<td><a href="/project/<?php echo $P->idname; ?>"><b><?php 
 			echo $P->name."</b><br/></a>".
 			shorten(strip_tags($P->desc),80,"...");
@@ -92,6 +101,7 @@ foreach($Projects as $P) // Data loop
 	<?php
 }
 ?>
+</tbody>
 </table>
 
 <?php pagination($page,$last_page); ?>

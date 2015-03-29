@@ -31,13 +31,13 @@ require_once("scripts/frontpage.php");
                 <div class="col-md-6">
                     <h2><a href="projectlist.php?order=uploaded">Latest</a></h2>
                     <?php
-                    listMaps("projects.date_created DESC");
+                    listMaps("projects.date_created DESC","latest");
                     ?>
                 </div>
                 <div class="col-md-6">
                     <h2><a href="projectlist.php?order=downloads">Most Downloaded</a></h2>
                     <?php
-                    listMaps("projects.downloads DESC");
+                    listMaps("projects.downloads DESC","downloaded");
                     ?>
                 </div>
             </div>
@@ -45,12 +45,12 @@ require_once("scripts/frontpage.php");
                 <?php
                 news();
                 toDo();
+                donators();
                 ?>
             </div>
         </div>
         <div class="container">
             <?php include("resources/footer.php"); ?>
         </div>
-        <div style="height:300px;"></div>
     </body>
 </html>

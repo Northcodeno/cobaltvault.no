@@ -43,7 +43,7 @@ foreach($Projects as $p) // Data loop
 	?>
 
     <div class="thumbnail">
-        <a href='/project/<?php echo $p->idname; ?>'><img src="<?php echo $p->thumbnail_url; ?>"></a>
+        <?php if($p->thumbnail_url && $p->thumbnail_url != "") { ?><a href='/project/<?php echo $p->idname; ?>'><img src="<?php echo $p->thumbnail_url; ?>" alt="<?php echo $p->name; ?>"></a><?php } ?>
         <h3><a href='project/<?php echo $p->idname; ?>'><?php echo $p->name; ?></a></h3>
         <h4><?php echo $p->typename; ?></h4>
         <p>

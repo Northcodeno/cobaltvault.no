@@ -11,3 +11,7 @@ function setHeight() {
 		obj.style.height = h + "px";
 	});
 }
+
+$(document).ready(function () {
+	setHeight();
+});

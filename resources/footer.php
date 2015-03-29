@@ -9,22 +9,29 @@
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
-<div class="footer">
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
 	<div class="container">
-		OpenSource | Copyright <a href="http://northcode.no/">Northcode</a> 2014 | Contact: <a href="mailto:jens@northcode.no">jens@northcode.no</a> | <a href="https://github.com/Jenjen1324/cobaltvault.no">GitHub</a><br><br>
+		<div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#footer-collapse">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	    </div>
 
-		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-		<input type="hidden" name="cmd" value="_s-xclick">
-		<input type="hidden" name="hosted_button_id" value="T4JUNLJPEWAYY">
-		<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"> 
-		<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-		</form>
-		Donate to keep the page running and to give me motivation to add stuff!
-
-	</div>
-</div>
-
-<div style="height:100px;"></div>
+	    <div class="collapse navbar-collapse" id="footer-collapse">
+	        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="navbar-form navbar-left">
+					<input type="hidden" name="cmd" value="_s-xclick">
+					<input type="hidden" name="hosted_button_id" value="T4JUNLJPEWAYY">
+					<input type="submit" value="Donate to show your support" class="btn btn-default" name="submit"> 
+			</form>
+			
+			<p class="nav navbar-text navbar-right">Copyright <a href="http://northcode.no/">Northcode</a> 2014 | Contact: <a href="mailto:jens@northcode.no">jens@northcode.no</a> | OpenSource <a href="https://github.com/Jenjen1324/cobaltvault.no">GitHub</a></p>
+	    </div>
+    </div>
+</nav>
 
 <script>
 $(document).ready(function() {

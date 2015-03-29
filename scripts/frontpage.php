@@ -1,8 +1,8 @@
 <?php
-function thumbnail($p)
+function thumbnail($p, $id_suff = "", $index = 0)
 {
     ?>
-    <div class="thumbnail">
+    <div class="thumbnail" <?php if($id_suff != "") { echo "id='" . $id_suff . "_$index'"; } ?>>
         <a href='/project/<?php echo $p->idname; ?>'><img class="t" src="<?php echo $p->thumbnail_url; ?>" alt="<?php echo $p->name; ?>"></a>
         <h3><a href='/project/<?php echo $p->idname; ?>'><?php echo $p->name; ?></a></h3>
         <p>
@@ -13,11 +13,15 @@ function thumbnail($p)
     <?php
 }
 
-function listMaps($order)
+function listMaps($order, $suff = "")
 {
     $Projects = Project::getProjects("projects.public = '1' AND projects.thumbnail_url != '' AND projects.thumbnail_url IS NOT NULL",$order,3);
+    $i = 0;
     foreach($Projects as $p)
-        thumbnail($p);
+    {
+        thumbnail($p, $suff, $i);
+        $i++;
+    }
 }
 
 function news()
@@ -101,6 +105,47 @@ function toDo()
     </div>
     <?php
 }
+
+function donators()
+{
+    ?>
+    <br/>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">Donators</h4>
+        </div>
+        <div class="panel-body">
+            Thank you for the donations!
+        </div>
+        <table class="table">
+            <tbody>
+                
+
+
+    <?php
+    global $mysql;
+
+    $stmt = $mysql->prepare("SELECT name,amount,DATE_FORMAT(`date`,'%d.%m.%Y') FROM donations ORDER BY date DESC");
+    $stmt->execute();
+    $stmt->bind_result($name, $amount, $date);
+    while($stmt->fetch())
+    {
+        ?>
+        <tr>
+            <td><?php echo $name; ?></td>
+            <td><?php echo $amount; ?>$</td>
+            <td><?php echo $date; ?></td>
+        </tr>
+        <?php
+    }
+
+    ?>
+    </tbody>
+    </table>
+    </div>
+    <?php 
+}
+
 function carousel($i,$order = "downloads DESC")
 {
     $Projects = Project::getFeaturedProjects();

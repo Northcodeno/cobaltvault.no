@@ -4,7 +4,7 @@
 <meta name="keywords" content="Cobalt,Oxeye,Mojang,Games,Maps,Mods,Central,Share">
 
 <?php
-$style = "/style/bootstrap.lumen.min.css";
+$style = "/style/bootstrap.flatly.min.css";
 if(isset($_GET['style']))
 {
 	$style = $_GET['style'];
