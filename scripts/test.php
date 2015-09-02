@@ -1,4 +1,15 @@
+<?php
 
+require_once("../lib/lib.php");
+require_once("../lib/project.php");
+require_once("../lib/northcode_api.php");
+
+echo '<pre>';
+var_dump(nc_api::get_user_info_by_uname("Jenjen1324"));
+var_dump(nc_api::get_user_info(2));
+
+
+/*
 <script src="dropzone.js"></script>
 
 

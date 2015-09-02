@@ -28,7 +28,7 @@ function printRating($val)
 	if(!$val)
 		echo '-';
 	else
-		echo $val;
+		echo round($val,2);
 	/*
 	?>
 	<div class="starRatePassive">

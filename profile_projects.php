@@ -53,8 +53,6 @@ $Projects = Project::getProjects("projects.author = $uid");
 		?>
 		</table>
     </div>
-    <div class="container">
     	<?php include("resources/footer.php"); ?>
-    </div>
   </body>
 </html>

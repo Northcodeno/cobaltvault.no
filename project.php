@@ -272,10 +272,8 @@ echo "</pre>";
 		?>
 		</div>
 	</div>
-    <div class="container" style="margin-top:100px;">
+	<div style="margin-top:100px;"></div>
         <?php include("resources/footer.php"); ?>
-    </div>
-	<div style="padding:200px;"></div>
 	<script>
 		
 		$("a.reply-button").click(function(event) {

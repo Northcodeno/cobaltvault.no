@@ -31,7 +31,7 @@
 			<p>It always returns data with JSON</p>
 
 			<h2>How to use the API</h2>
-			
+			<p>Coming soon...</p>
 		</div>
 	</body>
 </html>

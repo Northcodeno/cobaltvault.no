@@ -32,9 +32,10 @@ function getGETLinks($array)
 	if(isset($array['search']))
 		$final .= "/search/".$array['search'];
 	elseif(isset($_GET['search']))
+		if($_GET['search'] != "")
 		$final .= "/search/".$_GET['search'];
 
-	return $final;
+	return str_replace(' ','+',$final);
 }
 
 function pagination($page,$last_page)

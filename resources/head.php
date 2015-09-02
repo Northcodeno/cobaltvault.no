@@ -14,9 +14,11 @@ if(isset($_GET['style']))
 <link rel="stylesheet" type="text/css" href="/style/main.css">
 <link rel="icon" 
       type="image/png" 
-      href="/images/logo.png">
+      href="/images/logo2.png">
+<link rel="stylesheet" type="text/css" href="/style/fuelux.min.css">
 <script src="/scripts/jquery.min.js"></script>
 <script src="/scripts/bootstrap.min.js"></script>
+<script src="/scripts/fuelux.min.js"></script>
 <script src="/scripts/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
 tinymce.init({

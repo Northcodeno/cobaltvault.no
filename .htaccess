@@ -4,10 +4,10 @@ ErrorDocument 500 /error/500.html
 
 RewriteEngine On
 #RewriteRule    ^list/\?search\=([A-Za-z0-9-]+)    /list/search/$1  [R=302,L]   # How do I do this?
-RewriteRule    ^list/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$     projectlist.php?$1=$2&$3=$4&$5=$6&$7=$8   [NC,L]
-RewriteRule    ^list/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$                                     projectlist.php?$1=$2&$3=$4&$5=$6         [NC,L]
-RewriteRule    ^list/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$                                                                     projectlist.php?$1=$2&$3=$4               [NC,L]
-RewriteRule    ^list/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$                                                                                                     projectlist.php?$1=$2                     [NC,L]
+RewriteRule    ^list/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/?$     projectlist.php?$1=$2&$3=$4&$5=$6&$7=$8   [NC,L]
+RewriteRule    ^list/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/?$                                     projectlist.php?$1=$2&$3=$4&$5=$6         [NC,L]
+RewriteRule    ^list/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/?$                                                                     projectlist.php?$1=$2&$3=$4               [NC,L]
+RewriteRule    ^list/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/?$                                                                                                     projectlist.php?$1=$2                     [NC,L]
 RewriteRule    ^list/?$                                             projectlist.php                 [NC,L]
 RewriteRule    ^faq/?$                                              faq.php                         [NC,L]
 RewriteRule    ^project/([A-Za-z0-9-]+)/edit/?$                     project.php?id=$1&edit          [NC,L]

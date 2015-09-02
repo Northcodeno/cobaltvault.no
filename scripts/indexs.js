@@ -13,5 +13,5 @@ function setHeight() {
 }
 
 $(document).ready(function () {
-	setHeight();
+	setInterval(setHeight(), 1000);
 });

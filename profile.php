@@ -125,8 +125,6 @@ $edit = isset($_GET['edit']);
         </table>
       </div>
     </div>
-    <div class="container">
-      <?php include("resources/footer.php"); ?>
-    </div>
+    <?php include("resources/footer.php"); ?>
   </body>
 </html>

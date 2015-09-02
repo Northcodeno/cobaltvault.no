@@ -7,7 +7,10 @@ $maps_count = $_maps_r->num_rows;
     <div class="container">
 		<div class="container-fluid">
             <div class="navbar-header">
-    			<a href="/" class="navbar-brand">Cobalt Vault</a>
+    			<a href="/" class="navbar-brand">
+                    <img src="/images/logo2.png" alt="Brand">
+                    <p class="brand-text">Cobalt Vault</p>
+                </a>
     			<a class="navbar-toggle" data-toggle="collapse" data-target="#header-collapse">
     				<span class="icon-bar"></span>
     				<span class="icon-bar"></span>

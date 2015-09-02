@@ -49,8 +49,6 @@ require_once("scripts/frontpage.php");
                 ?>
             </div>
         </div>
-        <div class="container">
-            <?php include("resources/footer.php"); ?>
-        </div>
+        <?php include("resources/footer.php"); ?>
     </body>
 </html>

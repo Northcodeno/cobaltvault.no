@@ -164,9 +164,9 @@ try
 			break;
 
 		case "addauthor":
-			if(!isset($_POST['uid']))
+			if(!isset($_POST['uname']))
 				throw new Exception("Missing data");
-			$Project->addAuthor($_POST['uid']);
+			$Project->addAuthor($_POST['uname']);
 			alert("Author added");
 			break;
 

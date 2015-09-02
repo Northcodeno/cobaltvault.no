@@ -54,6 +54,31 @@ $i = 0;
 				?>
 				</ul>
 				</div>
+
+				<h1>Authors</h1>
+				<ul class="list-group">
+				<?php 
+				foreach($Project->authors as $author)
+				{
+					?>
+					<li class="list-group-item">
+					<?php echo $author->username; 
+					if($NC_USERINFO['uid'] != $author->uid) {
+					?>
+					<a href="/scripts/project.php?id=<?php echo $Project->id; ?>&a=delauthor&uid=<?php echo $author->uid; ?>" class="btn btn-danger pull-right">Delete</a>
+					<?php } ?>
+					</li>
+				<?php 
+				}
+				?>
+				</ul>
+				<form id="addauthor" class="form-inline" method="post" action="/scripts/project.php?id=<?php echo $Project->id; ?>&a=addauthor">
+					<div class="form-group">
+						<label for="authorusername">Username</label>
+						<input type="text" class="form-control" id="authorusername" placeholder="Enter EXACT Username" name="uname">
+					</div>
+					<input type="submit" class="btn btn-primary" value="Add Author">
+				</form>
 			</div>
 			<div class="col-md-6">
 				<h1>Add/Update Files</h1>
@@ -61,9 +86,7 @@ $i = 0;
 			</div>
 		</div>
 	</div>
-	<div class="container">
-		<?php include($_SERVER['DOCUMENT_ROOT'] . "/resources/footer.php"); ?>
-	</div>
+	<?php include($_SERVER['DOCUMENT_ROOT'] . "/resources/footer.php"); ?>
 
 	<script src="/scripts/dropzone.js"></script>
 	<script src="/scripts/project_edit.js"></script>

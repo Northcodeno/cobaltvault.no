@@ -7,3 +7,7 @@
 .table a {
 	text-decoration: none;
 }
+
+.row {
+	margin: 0px !important;
+}

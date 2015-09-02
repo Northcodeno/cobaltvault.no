@@ -10,7 +10,7 @@
 </script>
 
 
-<nav class="navbar navbar-default navbar-fixed-bottom">
+<nav class="navbar navbar-default navbar-static-top footer">
 	<div class="container">
 		<div class="navbar-header">
 	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#footer-collapse">
@@ -28,7 +28,7 @@
 					<input type="submit" value="Donate to show your support" class="btn btn-default" name="submit"> 
 			</form>
 			
-			<p class="nav navbar-text navbar-right">Copyright <a href="http://northcode.no/">Northcode</a> 2014 | Contact: <a href="mailto:jens@northcode.no">jens@northcode.no</a> | OpenSource <a href="https://github.com/Jenjen1324/cobaltvault.no">GitHub</a></p>
+			<p class="nav navbar-text navbar-right">Copyright <a href="http://northcode.no/">Northcode</a> 2015 | Contact: <a href="mailto:jens@northcode.no">jens@northcode.no</a> | OpenSource <a href="https://github.com/Jenjen1324/cobaltvault.no">GitHub</a></p>
 	    </div>
     </div>
 </nav>

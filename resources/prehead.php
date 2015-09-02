@@ -1,7 +1,8 @@
 <?php
-
-//header("Location: /error/database.html");
-
+/*
+header("Location: /error/database.html");
+die();
+*/
 ini_set('display_errors',1);
 ini_set('display_startup_errors',1);
 error_reporting(-1);

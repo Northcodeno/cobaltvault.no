@@ -89,7 +89,6 @@ function toDo()
             <div id="collapse_ToDo" class="panel-collapse collapse in">
                 <div class="panel-body">
                     <ol>
-                        <li>Multiple Authors</li>
                         <li>Custom Soundtrack Integration</li>
                         <li>API (for applications)</li>
                         <li>More...</li>

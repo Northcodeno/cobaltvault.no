@@ -69,9 +69,7 @@ if(!$NC_LOGGED_IN)
 			</div>
 		</form>
 	</div>
-	<div class="container">
 		<?php include("resources/footer.php"); ?>
-	</div>
 
 	<script src="scripts/createprj.js"></script>
 </body>

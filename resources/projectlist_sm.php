@@ -60,6 +60,9 @@ foreach($Projects as $p) // Data loop
 		$i = 0;
 	}
 }
+
+if($i != 0)
+	echo "</div>";
 ?>
 </div>
 <?php

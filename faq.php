@@ -98,8 +98,6 @@ function drawPanel($id,$row)
     		</p>
     	</div>
     </div>
-    <div class="container">
         <?php include("resources/footer.php"); ?>
-    </div>
   </body>
 </html>

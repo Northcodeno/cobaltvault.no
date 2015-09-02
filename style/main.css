@@ -1,11 +1,18 @@
 .footer {
-	/*height: 100px;*/
-	background-color: #f5f5f5;
-	padding-top: 30px;
-	padding-bottom: 30px;
+	margin-bottom: 0px;
 }
 
 body {
 	padding-top: 70px;
-	padding-bottom: 70px;
+	/*padding-bottom: 70px; */
+}
+
+.navbar-brand img {
+  height: 40px;
+  top: 10px;
+  position: fixed;
+}
+
+.brand-text {
+	margin-left: 45px;
 }

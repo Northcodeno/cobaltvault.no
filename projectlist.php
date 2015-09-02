@@ -15,6 +15,7 @@ require_once("resources/projectlist.php");
 <body>
 	<?php include("resources/header.php"); ?>
 	<br/>
+	<div class="row">
 	<div class="col-md-2">
 		<ul class="nav nav-pills nav-stacked">
 			<li <?php if(!isset($_GET['type'])) { echo 'class="active"'; } ?>><a href="/list">All Maps</a></li>
@@ -39,8 +40,7 @@ require_once("resources/projectlist.php");
 			<?php include("resources/projectlist_sm.php"); ?>
 		</div>
 	</div>
-    <div class="container">
+	</div>
     	<?php include("resources/footer.php"); ?>
-    </div>
 </body>
 </html>

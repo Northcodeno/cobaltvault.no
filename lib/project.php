@@ -444,11 +444,16 @@ class Project
 		return $str;
 	}
 
-	public function addAuthor($uid)
+	public function addAuthor($uname)
 	{
 		global $mysql;
 
-		if(isAuthor($uid))
+		$uinfo = nc_api::get_user_info_by_uname($uname);
+		if(!isset($uinfo['uid']))
+			throw new Exception("User not found!");
+		$uid = $uinfo['uid'];
+
+		if($this->isAuthor($uid))
 		{
 			throw new Exception("This user is already an Author");
 		}
@@ -463,7 +468,7 @@ class Project
 	{
 		global $mysql;
 
-		if(!isAuthor($uid))
+		if(!$this->isAuthor($uid))
 			throw new Exception("This user isn't an Author");
 
 		if(sizeof($this->authors) == 1)
@@ -625,6 +630,15 @@ class Project
 		$stmt->close();
 
 		return new Project($PID);
+	}
+
+	public static function getProjectsCount()
+	{
+		global $mysql;
+
+		$query = $mysql->query("SELECT * FROM projects WHERE public = '1' ");
+		$maps_count = $query->num_rows;
+		return $maps_count;
 	}
 
 

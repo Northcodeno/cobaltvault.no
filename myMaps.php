@@ -53,8 +53,6 @@ $uid = $NC_USERINFO['uid'];
 		?>
 		</table>
     </div>
-    <div class="container">
-    	<?php include("resources/footer.php"); ?>
-    </div>
+	<?php include("resources/footer.php"); ?>
   </body>
 </html>
