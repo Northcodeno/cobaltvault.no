@@ -47,7 +47,7 @@ $maps_count = $_maps_r->num_rows;
 					{
 					?>
 					<li><a href="#modal_login" data-toggle="modal">Login</a></li>
-					<li><a href="http://dev.northcode.no/register.php">Register</a></li>
+					<li><a href="http://northcode.no/register.php">Register</a></li>
 					<?php
 					}
 					?>
