@@ -22,3 +22,5 @@ lib/mail.php
 
 # sftp configuration file
 sftp-config.json
+
+ignore*
