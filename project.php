@@ -5,7 +5,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/lib/lib.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/resources/prehead.php");
 if(!isset($_GET['id']))
 	alert("Project not found!","danger","/list");
-$id = mysql_escape_string($_GET['id']);
+$id = $_GET['id'];
 try
 {
 	$Project = new Project($_GET['id']);

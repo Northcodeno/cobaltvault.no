@@ -3,9 +3,10 @@
 header("Location: /error/database.html");
 die();
 */
+/*
 ini_set('display_errors',1);
 ini_set('display_startup_errors',1);
-error_reporting(-1);
+error_reporting(-1);*/
 require_once($_SERVER['DOCUMENT_ROOT'] . "/resources/connect.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/lib/lib.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/lib/northcode_api.php");

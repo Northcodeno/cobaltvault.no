@@ -156,6 +156,7 @@ try
 			alert("Comment posted!");
 			break;
 
+
 		case "delcomment":
 			if(!isset($_GET['cid']))
 				throw new Exception("Missing data");
