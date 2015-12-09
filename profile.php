@@ -92,7 +92,7 @@ $edit = isset($_GET['edit']);
           } else {
           echo $PROFILE['info']; 
           if($owner) {
-            echo '<br/><a href="?id='.$_GET['id'].'&edit" class="btn btn-default btn-block">Edit</a>';
+            echo '<br/><a href="/user/'.$_GET['id'].'/edit" class="btn btn-default btn-block">Edit</a>';
           }
           }
           ?>

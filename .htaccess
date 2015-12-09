@@ -20,6 +20,7 @@ RewriteRule    ^create/?$                                           project_crea
 RewriteRule    ^userprojects/?$                                     profile_projects.php            [NC,L]
 RewriteRule    ^download/([a-z-]+)/([0-9-]+)/?$                     download.php?type=$1&id=$2      [NC,L]
 RewriteRule    ^user/([A-Za-z0-9-]+)/?$                             profile.php?id=$1               [NC,L]
+RewriteRule    ^user/([A-Za-z0-9-]+)/edit/?$                        profile.php?id=$1&edit=1        [NC,L]
 
 #RewriteCond %{REMOTE_ADDR} !^81\.62\.30\.203
 #RewriteCond %{REQUEST_URI} !/error/maintenance.html$ [NC]

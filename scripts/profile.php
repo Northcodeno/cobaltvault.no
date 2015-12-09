@@ -54,8 +54,6 @@ if(isset($userinfo))
 		$bio = $purifier->purify($_POST['bio']);
 		echo $bio . "<br>";
 		$resp = $session->edit_user(array("change" => array("info" => $bio)));
-		var_dump($resp);
-		die();
 		alert("Success");
 	}
 	elseif(isset($_FILES["file"]))
