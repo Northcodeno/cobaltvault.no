@@ -147,7 +147,7 @@ $maps_count = $_maps_r->num_rows;
             <div class="modal-body">
             <?php
             if(isset($_GET['m']))
-                echo stripslashes($_GET['m']);
+                echo htmlspecialchars(stripslashes($_GET['m']));
             if(isset($_POST['m']))
                 echo decrypt(stripslashes($_POST['m']));
             ?>
