@@ -7,7 +7,7 @@
 $style = "/style/bootstrap.flatly.min.css";
 if(isset($_GET['style']))
 {
-	$style = $_GET['style'];
+	$style = htmlspecialchars($_GET['style']);
 }
 ?>
 <link rel="stylesheet" type="text/css" href="<?php echo $style; ?>">
