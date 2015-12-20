@@ -41,8 +41,8 @@ if(contains($_POST['username'],$disallowed))
 
 _error($error);
 
-$_name = $_POST['username'];
-$_email = $_POST['email'];
+$_name = mysql_real_escape_string($_POST['username']);
+$_email = mysql_real_escape_string($_POST['email']);
 $_password = md5(MD5SALT.$_POST['password']);
 $_registration_id = md5(rand());
 
