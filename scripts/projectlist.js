@@ -9,9 +9,9 @@ function projectsData(options, callback) {
 			width: '5%'
 		},
 		{
-			label: 'Description',
+			label: 'Title',
 			property: 'title',
-			sortable: true,
+			sortable: false,
 			width: '35%' 
 		},
 		{

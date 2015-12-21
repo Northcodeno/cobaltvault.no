@@ -10,7 +10,7 @@ RewriteRule    ^list/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z
 RewriteRule    ^list/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/?$                                     projectlist.php?$1=$2&$3=$4&$5=$6         [NC,L]
 RewriteRule    ^list/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/?$                                                                     projectlist.php?$1=$2&$3=$4               [NC,L]
 RewriteRule    ^list/([A-Za-z0-9-+]+)/([A-Za-z0-9-+]+)/?$                                                                                                     projectlist.php?$1=$2                     [NC,L]
-RewriteRule    ^list/?$                                             projectlist.php                 [NC,L]
+RewriteRule    ^list/?$                                             projectlist_new.php                 [NC,L]
 RewriteRule    ^faq/?$                                              faq.php                         [NC,L]
 RewriteRule    ^project/([A-Za-z0-9-]+)/edit/?$                     project.php?id=$1&edit          [NC,L]
 RewriteRule    ^project/([A-Za-z0-9-]+)/?$                          project.php?id=$1               [NC,L]

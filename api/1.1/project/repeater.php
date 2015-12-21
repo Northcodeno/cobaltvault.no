@@ -20,7 +20,11 @@ if($_GET['searchBy'] != null && $_GET['searchBy'] != '')
 if(isset($_GET['filterBy']))
 if($_GET['filterBy'] != null && $_GET['filterBy'] != "" && $_GET['filterBy'] != "all")
 {
-	$where .= " AND type = " . $_GET['filterBy'] . " ";
+	if($_GET['filterBy'] == "title") 
+		$f = "name";
+	else 
+		$f = $_GET['filterBy'];
+	$where .= " AND type = " . $f . " ";
 }
 
 $offset = ($_GET['pageIndex']) * $_GET['pageSize'];
