@@ -53,7 +53,7 @@ $edit = isset($_GET['edit']);
         echo $PROFILE['username'];
         ?></h3>
         <img src="/<?php echo $pimage; ?>" class="img-thumbnail pimage" />
-        <?php
+        <?php 
         if($owner)
         {
           ?>
@@ -61,8 +61,8 @@ $edit = isset($_GET['edit']);
             <input type="file" name="file" class="btn btn-default btn-block"/>
             <input type="submit" value="Update Image" class="btn btn-default btn-block"/>
           </form>
-          <?
-        }
+          <?php
+        } 
         ?>
         <table class="table">
           <tr>
@@ -90,11 +90,11 @@ $edit = isset($_GET['edit']);
             </form>
             <?php
           } else {
-          echo $PROFILE['info']; 
-          if($owner) {
-            echo '<br/><a href="/user/'.$_GET['id'].'/edit" class="btn btn-default btn-block">Edit</a>';
-          }
-          }
+            echo $PROFILE['info']; 
+            if($owner) {
+              echo '<br/><a href="/user/'.$_GET['id'].'/edit" class="btn btn-default btn-block">Edit</a>';
+            }
+          } 
           ?>
         </p>
       </div>
@@ -110,7 +110,7 @@ $edit = isset($_GET['edit']);
           </tr>
 
           <?php
-          foreach($Projects as $P) {
+          /*foreach($Projects as $P) {
           ?>
 
           <tr>
@@ -121,10 +121,10 @@ $edit = isset($_GET['edit']);
             <td><?php echo $P->date_created; ?></td>
             <td><?php echo $P->date_modified; ?></td>
           </tr>
-          <?php } ?>
+          <?php } */ ?>
         </table>
       </div>
     </div>
-    <?php include("resources/footer.php"); ?>
+    <?php /*include("resources/footer.php"); */ ?>
   </body>
 </html>
