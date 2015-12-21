@@ -110,7 +110,7 @@ $edit = isset($_GET['edit']);
           </tr>
 
           <?php
-          /*foreach($Projects as $P) {
+          foreach($Projects as $P) {
           ?>
 
           <tr>
@@ -121,7 +121,7 @@ $edit = isset($_GET['edit']);
             <td><?php echo $P->date_created; ?></td>
             <td><?php echo $P->date_modified; ?></td>
           </tr>
-          <?php } */ ?>
+          <?php }  ?>
         </table>
       </div>
     </div>
