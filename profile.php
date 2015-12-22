@@ -18,7 +18,7 @@ else
 // USER FETCH $PROFILE
 $PROFILE = nc_api::get_user_info($id);
 if(!(isset($PROFILE['username'])))
-  header("Location: index.php");
+  _error("User not found!");
 
 $pimage = "images/profile.png";
 if(file_exists(DIR . $PROFILE['username'] . ".png"))
