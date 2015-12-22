@@ -6,7 +6,7 @@ Options -Indexes
 
 <IfModule mod_headers.c>
     Header always append X-Frame-Options SAMEORIGIN
-    Header always append X-XSS-Protection: 1; mode=block
+    Header set x-xss-protection "1; mode=block"
 </IfModule>
 
 RewriteEngine On
