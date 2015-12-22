@@ -3,8 +3,11 @@ ErrorDocument 403 /error/403.html
 ErrorDocument 500 /error/500.html 
 
 Options -Indexes
-Header always append X-Frame-Options SAMEORIGIN
-Header always append X-XSS-Protection: 1; mode=block
+
+<IfModule mod_headers.c>
+    Header always append X-Frame-Options SAMEORIGIN
+    Header always append X-XSS-Protection: 1; mode=block
+</IfModule>
 
 RewriteEngine On
 #RewriteRule    ^list/\?search\=([A-Za-z0-9-]+)    /list/search/$1  [R=302,L]   # How do I do this?
