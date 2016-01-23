@@ -1,4 +1,6 @@
-<?php require("resources/prehead.php"); 
+<?php 
+require_once("resources/prehead.php"); 
+
 if(!$NC_LOGGED_IN)
 	alert("You have to be logged in to view your projects!","warning","index.php");
 $uid = $NC_USERINFO['uid'];

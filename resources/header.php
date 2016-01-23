@@ -18,12 +18,12 @@ $maps_count = $_maps_r->num_rows;
     			</a>
             </div>
 			<div class="navbar-collapse collapse" id="header-collapse">
-                <form method="get" class="navbar-form navbar-left" role="search" action="/list/">
+                <!--<form method="get" class="navbar-form navbar-left" role="search" action="/list/">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search Maps..." name="search" value="<?php if(isset($_GET['search'])) { echo $_GET['search']; }?>">
                     </div>
                     <input type="submit" class="btn btn-default" value="Go">
-                </form>
+                </form>-->
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
 					<li><a href="/list">Projects (<?php echo $maps_count; ?>)</a></li>
@@ -38,7 +38,7 @@ $maps_count = $_maps_r->num_rows;
                             <li><a href="/scripts/logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                             <li><a href="/create"><span class="glyphicon glyphicon-cloud-upload"></span> Create Project</a></li>
                             <li><a href="/userprojects">My Projects</a></li>
-                            <? /*<?php if ($_SESSION['rank'] > 8) { ?><li><a href="#modal_login" data-toggle="modal">Override Login</a></li><?php } ?>*/ ?>
+                            <?php /*<?php if ($_SESSION['rank'] > 8) { ?><li><a href="#modal_login" data-toggle="modal">Override Login</a></li><?php } ?>*/ ?>
                         </ul>
                     </li>
 					<?php

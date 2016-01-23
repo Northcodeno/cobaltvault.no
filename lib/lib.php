@@ -1,7 +1,7 @@
 <?php
 define("MD5SALT","dhf489dvx0hwkl__30d9");
 define("ALLOWED_TAGS","");
-session_start();
+@session_start();
 
 function isJson($str)
 {

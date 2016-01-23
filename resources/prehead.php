@@ -42,4 +42,5 @@ else
 {
 	$NC_LOGGED_IN = false;
 }
+
 ?>
