@@ -1,0 +1,77 @@
+{% load bootstrap3 staticfiles %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="author" content="Northcode" />
+
+		{% bootstrap_css %}
+		{% bootstrap_messages %}
+
+		<link rel="icon" type="images/png" href="{% static 'icon_small.png' %}" />
+		
+		{% block head %}
+		<title>Cobalt Vault</title>
+		<meta name="description" content="Download Cobalt Maps and Mods at a central place or share your own creations!" />
+		<link rel="stylesheet" href="{% static 'index.css' %}" />
+		{% endblock %}
+	</head>
+	<body>
+		{% block header %}
+		<header class="navbar navbar-default">
+			<section class="container">
+				<section class="navbar-header">
+					<a href="{% url 'index' %}" class="navbar-brand">
+						Cobalt Vault
+					</a>
+					<a class="navbar-toggle" data-toggle="collapse" data-target="#header-collapse">
+    						<span class="icon-bar"></span>
+    						<span class="icon-bar"></span>
+    						<span class="icon-bar"></span>
+    					</a>
+				</section>
+				<nav class="navbar-collapse collapse" id="header-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="{% url 'index' %}">{% bootstrap_icon 'home' %}</a></li>
+						<li><a href="https://forum.cobaltvault.no">Cobalt Forum</a></li>
+						<li><a href="#">Projects</a></li>
+						<li class="dropdown">
+							<a href="#" data-toggle="dropdown">Help <span class="caret" /></a>
+							<ul class="dropdown-menu">
+								<li><a href="#FAQ">FAQ</a></li>
+								<li><a href="#">Source code</a></li>
+								<li class="divider"></li>
+								<li><a href="http://northcode.no">Northcode</a></li>
+								<li class="divider"></li>
+								<li><a href="http://playcobalt.com">Cobalt Homepage</a></li>
+								<li><a href="http://oxeyegames.com">Oxeye Games</a></li>
+							</ul>
+						</li>
+					</ul>
+				</nav>
+			</section>
+		</header>
+		{% endblock %}
+
+		<section class="container" id="pagecontent">
+			{% block content %}
+			<section class="col-md-8">
+				<h1>Featured maps!</h1>
+				
+			</section>
+			<section class="col-mo-6">
+			</section>
+			<aside class="col-md-4">
+				{% block sidebar %}
+				{% bootstrap_button "Upload a map!" button_type='link' size='lg' button_class='btn-primary' %}
+				{% endblock %}
+			</aside>
+			{% endblock %}
+		</section>
+	</body>
+
+	
+	
+	{% bootstrap_javascript jquery=True %}
+</html>
