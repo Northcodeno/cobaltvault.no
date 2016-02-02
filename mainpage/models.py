@@ -6,6 +6,9 @@ class ProjectMapType(models.Model):
     name = models.CharField(max_length=25)
     name_short = models.CharField(max_length=11)
 
+    def __str__(self):
+        return self.name
+
     
 class Project(models.Model):
     idname = models.SlugField()
@@ -19,6 +22,9 @@ class Project(models.Model):
     version = models.CharField(max_length=10)
     ispublic = models.BooleanField()
     thumbnail = models.ImageField(upload_to="thumbnails/")
+
+    def __str__(self):
+        return self.name
 
 class ProjectFile(models.Model):
     project = models.ForeignKey(Project)
