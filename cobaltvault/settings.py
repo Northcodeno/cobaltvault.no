@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'bootstrap3',
+    'easy_thumbnails',
 
     'mainpage',
     'info',
@@ -128,3 +129,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+THUMBNAIL_URL = '/thumbnails/'
+THUMBNAIL_ROOT = 'thumbnails/'

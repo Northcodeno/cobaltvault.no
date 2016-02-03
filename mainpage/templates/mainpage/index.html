@@ -57,14 +57,52 @@
 		<section class="container" id="pagecontent">
 			{% block content %}
 			<section class="col-md-8">
-				<h1>Featured maps!</h1>
-				
-			</section>
-			<section class="col-mo-6">
-			</section>
+				{% block main %}
+				<h2>Most downloaded</h2>
+				<div id="carousel-maps" class="carousel slide" data-ride="carousel">
+					<ol class="carousel-indicators">
+						{% for project in mostdl %}
+						<li data-target="#carousel-maps" data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}active="true"{% endif %}></li>
+						{% endfor %}
+					</ol>
+
+					<div class="aspectwrapper">
+						<div class="carousel-inner aspectwrapper-inner">
+							{% for project in mostdl %}
+							<div class="item {% if forloop.first %}active{% endif %}">
+								<a href="{% url 'project' project.idname %}"><img src="{{ project.thumbnail.url }}" alt="{{ project.name }}"></a>
+								<div class="carousel-caption">
+									<h3><a href="{% url 'project' project.idname %}">{{ project.name }}</a></h3>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+
+						<a class="left carousel-control" href="#carousel-maps" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+            			<a class="right carousel-control" href="#carousel-maps" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            		</div>
+            	</div>
+
+            	<h2>News</h2>
+
+            	{% endblock %}
+            </section>
+
 			<aside class="col-md-4">
 				{% block sidebar %}
-				{% bootstrap_button "Upload a map!" button_type='link' size='lg' button_class='btn-primary' %}
+				<h2>Latest Updates</h2>
+				{% for project in latest %}
+				<div class="thumbnail">
+					<a href="{% url 'project' project.idname %}">
+						<img class="t" src="{{ project.thumbnail.url }}" alt="{{ project.name }}">
+					</a>
+					<h3><a href="{% url 'project' project.idname %}">{{ project.name }}</a></h3>
+					<p>
+					{{ project.description }}
+					</p>
+				</div>
+
+				{% endfor %}
 				{% endblock %}
 			</aside>
 			{% endblock %}

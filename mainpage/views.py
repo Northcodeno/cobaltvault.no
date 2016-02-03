@@ -7,7 +7,10 @@ from .models import Project
 
 # Create your views here.
 def index(request):
-    return render(request, "mainpage/index.html", {})
+	latest = Project.objects.order_by('date_created')[:5]
+	mostdl = Project.objects.order_by('downloads')[:5]
+	featured = Project.objects.order_by('?')[:5]
+	return render(request, "mainpage/index.html", { 'latest': latest, 'mostdl': mostdl, 'featured': featured })
 
 def project(request, project_id):
 	try:
