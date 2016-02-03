@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from easy_thumbnails.signals import saved_file
+from easy_thumbnails.signal_handlers import generate_aliases_global
 
 # Create your models here.
 class ProjectMapType(models.Model):
@@ -49,3 +51,4 @@ class Comment(models.Model):
     project = models.ForeignKey(Project)
     replyto = models.ForeignKey("Comment",null=True)
     
+saved_file.connect(generate_aliases_global)

@@ -1,4 +1,5 @@
 {% load bootstrap3 staticfiles %}
+{% load thumbnail %}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -94,7 +95,7 @@
 				{% for project in latest %}
 				<div class="thumbnail">
 					<a href="{% url 'project' project.idname %}">
-						<img class="t" src="{{ project.thumbnail.url }}" alt="{{ project.name }}">
+						<img class="t" src="{% thumbnail project.thumbnail 160x90 crop %}" alt="{{ project.name }}">
 					</a>
 					<h3><a href="{% url 'project' project.idname %}">{{ project.name }}</a></h3>
 					<p>
