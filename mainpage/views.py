@@ -14,6 +14,9 @@ def index(request):
 	featured = Project.objects.order_by('?')[:5]
 	return render(request, "mainpage/index.html", { 'latest': latest, 'mostdl': mostdl, 'featured': featured })
 
+def list(request):
+	return render(request, "mainpage/list.html", {'projects': Project.objects.all() })
+
 def project(request, project_id):
 	if (project_id.isdigit()):
 		project = get_object_or_404(Project, pk=project_id)
