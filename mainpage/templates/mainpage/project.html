@@ -1,5 +1,6 @@
 {% extends "mainpage/index.html" %}
 {% load bootstrap3 staticfiles %}
+{% load django_markdown %}
 
 {% block head %}
 <title>{{ project.name }}</title>
@@ -8,7 +9,7 @@
 {% block content %}
 <div class="col-md-9">
 	<h1>{{ project.name }}</h1>
-	{{ project.description | safe }}
+	{{ project.description | markdown }}
 	{{ project.pk }}
 </div>
 

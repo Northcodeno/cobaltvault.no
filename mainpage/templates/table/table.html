@@ -26,7 +26,7 @@
                     {% block table.tbody.row %}
                         <tr class="{% cycle "odd" "even" %}">
                             {% for column, cell in row.items %}
-                                <td>{{ cell }}</td>
+                                <td>{{ cell | truncatewords:15 }}</td>
                             {% endfor %}
                         </tr>
                     {% endblock table.tbody.row %}

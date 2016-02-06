@@ -33,7 +33,9 @@ class Project(models.Model):
         return self.name
 
     def get_thumb(self):
-        return get_thumbnailer(self.thumbnail).get_thumbnail(aliases.get('small')).tag
+        thumb = get_thumbnailer(self.thumbnail).get_thumbnail(aliases.get('small')).tag
+        html = render_to_string('table/name_field.html', {'project': this, 'thumb': thumb})
+        return html
 
 class ProjectFile(models.Model):
     project = models.ForeignKey(Project)
