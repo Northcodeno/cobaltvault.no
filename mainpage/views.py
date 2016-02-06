@@ -17,7 +17,9 @@ def index(request):
 	return render(request, "mainpage/index.html", { 'latest': latest, 'mostdl': mostdl, 'news': news })
 
 def list(request):
-	return render(request, "mainpage/list.html", {'table': ProjectTable(Project.objects.all()) })
+	table = ProjectTable(Project.objects.all())
+	table.paginate(page=request.GET.get('page',1), per_page=25)
+	return render(request, "mainpage/list.html", {'table': table })
 
 def project(request, project_id):
 	if (project_id.isdigit()):

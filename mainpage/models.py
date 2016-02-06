@@ -42,6 +42,9 @@ class Project(models.Model):
         c = Context({'project': self})
         return t.render(c)
 
+    def get_pretty_authors(self):
+        return loader.get_template('table/author_field.html').render(Context({'authors':self.author.all()}))
+
 class ProjectFile(models.Model):
     project = models.ForeignKey(Project)
     filename = models.FileField()
