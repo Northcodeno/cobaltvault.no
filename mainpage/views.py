@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import Http404
 from django.views.generic.list import ListView
 from django.utils.encoding import smart_str
+from django.db.models import Q
+from django.shortcuts import get_object_or_404
 
 from .models import Project
 
@@ -13,23 +15,15 @@ def index(request):
 	return render(request, "mainpage/index.html", { 'latest': latest, 'mostdl': mostdl, 'featured': featured })
 
 def project(request, project_id):
-	try:
-		project = Project.objects.get(pk=project_id)
-	except:
-		try:
-			project = Project.objects.get(idname=project_id)
-		except Project.DoesNotExist:
-			raise Http404('Project does not exist!')
+	if (type(project_id) is str):
+		project = get_object_or_404(Project, idname=project_id)
+	else:
+		project = get_object_or_404(Project, pk=project_id)
 	return render(request, "mainpage/project.html", {'project': project})
 
 def project_download(request, project_id):
-	try:
-		project = Project.objects.get(pk=project_id)
-	except:
-		try:
-			project = Project.objects.get(idname=project_id)
-		except Project.DoesNotExist:
-			raise Http404('Project does not exist!')
+	return
+	#project = get_object_or_404(Project, Q(pk=project_id)|Q(idname=project_id))
 	
 	#response = HttpResponse(mimetype='application/force-download')
 	#response['Content-Disposition'] = 'attachment; filename=%s' % smart_str()
