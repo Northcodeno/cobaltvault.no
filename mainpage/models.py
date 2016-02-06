@@ -34,7 +34,7 @@ class Project(models.Model):
 
     def get_thumb(self):
         thumb = get_thumbnailer(self.thumbnail).get_thumbnail(aliases.get('small')).tag
-        html = render_to_string('table/name_field.html', {'project': this, 'thumb': thumb})
+        html = render_to_string('table/name_field.html', {'project': self, 'thumb': thumb})
         return html
 
 class ProjectFile(models.Model):
