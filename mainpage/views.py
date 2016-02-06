@@ -15,10 +15,10 @@ def index(request):
 	return render(request, "mainpage/index.html", { 'latest': latest, 'mostdl': mostdl, 'featured': featured })
 
 def project(request, project_id):
-	if (type(project_id) is str):
-		project = get_object_or_404(Project, idname=project_id)
-	else:
+	if (project_id.isdigit()):
 		project = get_object_or_404(Project, pk=project_id)
+	else:
+		project = get_object_or_404(Project, idname=project_id)
 	return render(request, "mainpage/project.html", {'project': project})
 
 def project_download(request, project_id):
