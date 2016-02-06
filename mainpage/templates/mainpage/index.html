@@ -1,4 +1,4 @@
-{% load bootstrap3 staticfiles %}
+{% load bootstrap3 staticfiles django_markdown %}
 {% load thumbnail %}
 <!DOCTYPE html>
 <html>
@@ -84,7 +84,17 @@
             		</div>
             	</div>
 
-            	<h2>News</h2>
+		<section id="news">
+            		<h2>News</h2>
+			<section id="newsposts">
+				{% for post in news %}
+				<article class="newspost">
+					<h3>{{post.title}}</h3>
+					{{post.text|markdown}}
+				</article>
+				{% endfor %}
+			</section>
+		</section>
 
             	{% endblock %}
             </section>

@@ -7,13 +7,14 @@ from django.shortcuts import get_object_or_404
 
 from .models import Project
 from .tables import ProjectTable
+from info.models import NewsPost
 
 # Create your views here.
 def index(request):
 	latest = Project.objects.order_by('date_created')[:5]
 	mostdl = Project.objects.order_by('downloads')[:5]
-	featured = Project.objects.order_by('?')[:5]
-	return render(request, "mainpage/index.html", { 'latest': latest, 'mostdl': mostdl, 'featured': featured })
+	news = NewsPost.objects.all()[:5]
+	return render(request, "mainpage/index.html", { 'latest': latest, 'mostdl': mostdl, 'news': news })
 
 def list(request):
 	return render(request, "mainpage/list.html", {'table': ProjectTable(Project.objects.all()) })
