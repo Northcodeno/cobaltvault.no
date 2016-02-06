@@ -34,13 +34,13 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+    def get_desc(self):
+        return loader.get_template('table/name_field.html').render(Context({'project':self}))
+
     def get_thumb(self):
-        thumb = get_thumbnailer(self.thumbnail).get_thumbnail(aliases.get('small')).tag(alt=self.name)
-        t = loader.get_template('table/name_field.html')
-        c = Context({'project': self, 'thumb': thumb})
-        html = t.render(c)
-        # html = render_to_string('table/name_field.html', {'project': self, 'thumb': thumb})
-        return html
+        t = loader.get_template('table/thumb_field.html')
+        c = Context({'project': self})
+        return t.render(c)
 
 class ProjectFile(models.Model):
     project = models.ForeignKey(Project)
