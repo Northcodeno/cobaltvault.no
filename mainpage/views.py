@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
 from .models import Project
+from .tables import ProjectTable
 
 # Create your views here.
 def index(request):
@@ -15,7 +16,7 @@ def index(request):
 	return render(request, "mainpage/index.html", { 'latest': latest, 'mostdl': mostdl, 'featured': featured })
 
 def list(request):
-	return render(request, "mainpage/list.html", {'projects': Project.objects.all() })
+	return render(request, "mainpage/list.html", {'table': ProjectTable(Project.objects.all()) })
 
 def project(request, project_id):
 	if (project_id.isdigit()):
