@@ -1,4 +1,5 @@
 from django.db import models
+from django_markdown.models import MarkdownField
 
 # Create your models here.
 
@@ -19,7 +20,7 @@ class Faq(models.Model):
     
 class NewsPost(models.Model):
     title = models.CharField(max_length=45)
-    text = models.TextField()
+    text = MarkdownField()
     date = models.DateTimeField(auto_now_add=True)
 
 class Stream(models.Model):

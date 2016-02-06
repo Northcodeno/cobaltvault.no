@@ -71,7 +71,7 @@
 						<div class="carousel-inner aspectwrapper-inner">
 							{% for project in mostdl %}
 							<div class="item {% if forloop.first %}active{% endif %}">
-								<a href="{% url 'project' project.idname %}"><img src="{{ project.thumbnail.url }}" alt="{{ project.name }}"></a>
+								<a href="{% url 'project' project.idname %}"><img src="{{ project.thumbnail.large }}" alt="{{ project.name }}"></a>
 								<div class="carousel-caption">
 									<h3><a href="{% url 'project' project.idname %}">{{ project.name }}</a></h3>
 								</div>
@@ -95,7 +95,7 @@
 				{% for project in latest %}
 				<div class="thumbnail">
 					<a href="{% url 'project' project.idname %}">
-						<img class="t" src="{% thumbnail project.thumbnail 160x90 crop %}" alt="{{ project.name }}">
+						<img class="t" src="{{ project.thumbnail.small.url }}" alt="{{ project.name }}">
 					</a>
 					<h3><a href="{% url 'project' project.idname %}">{{ project.name }}</a></h3>
 					<p>

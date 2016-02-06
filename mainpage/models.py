@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from easy_thumbnails.signals import saved_file
 from easy_thumbnails.signal_handlers import generate_aliases_global
+from easy_thumbnails.fields import ThumbnailerImageField
 
 # Create your models here.
 class ProjectMapType(models.Model):
@@ -23,7 +24,7 @@ class Project(models.Model):
     author = models.ManyToManyField(User)
     version = models.CharField(max_length=10)
     ispublic = models.BooleanField()
-    thumbnail = models.ImageField(upload_to="thumbnails/")
+    thumbnail = ThumbnailerImageField(upload_to="thumbnails/",resize_source=dict(size=(1920,1080), sharpen=True))
 
     def __str__(self):
         return self.name
