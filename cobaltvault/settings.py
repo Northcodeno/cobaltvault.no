@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'bootstrap3',
     'easy_thumbnails',
     'django_tables2',
+    'django_markdown',
 
     'mainpage',
     'info',

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from easy_thumbnails.signals import saved_file
 from easy_thumbnails.signal_handlers import generate_aliases_global
 from easy_thumbnails.fields import ThumbnailerImageField
+from django_markdown.models import MarkdownField
 
 # Create your models here.
 class ProjectMapType(models.Model):
@@ -16,7 +17,7 @@ class ProjectMapType(models.Model):
 class Project(models.Model):
     idname = models.SlugField()
     name = models.CharField(max_length=40)
-    description = models.TextField()
+    description = MarkdownField()
     maptype = models.ForeignKey(ProjectMapType)
     downloads = models.PositiveIntegerField()
     date_created = models.DateTimeField(auto_now_add = True)
@@ -47,7 +48,7 @@ class ProjectVote(models.Model):
 
 class Comment(models.Model):
     author = models.ForeignKey(User)
-    messsage = models.CharField(max_length=500)
+    messsage = MarkdownField(max_length=500)
     date = models.DateTimeField(auto_now_add=True)
     project = models.ForeignKey(Project)
     replyto = models.ForeignKey("Comment",null=True)
