@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'bootstrap3',
     'easy_thumbnails',
+    'django_tables2',
 
     'mainpage',
     'info',
@@ -70,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.request',
             ],
         },
     },
