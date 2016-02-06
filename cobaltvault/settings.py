@@ -131,3 +131,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 THUMBNAIL_URL = '/thumbnails/'
 THUMBNAIL_ROOT = 'thumbnails/'
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'large': {'size': (800,452), 'crop': True}
+        'medium': {'size': (600,340), 'crop': True}
+        'small': {'size': (320,180), 'crop': True}
+    }
+}
