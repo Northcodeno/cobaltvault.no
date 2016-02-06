@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="author" content="Northcode" />
 
-		{% bootstrap_css %}
+		<link rel="stylesheet" href="//bootswatch.com/flatly/bootstrap.min.css">
 		{% bootstrap_messages %}
 
 		<link rel="icon" type="images/png" href="{% static 'icon_small.png' %}" />
@@ -85,7 +85,7 @@
             	</div>
 
 		<section id="news">
-            		<h2>News</h2>
+    		<h2>News</h2>
 			<section id="newsposts">
 				{% for post in news %}
 				<article class="newspost">
@@ -103,13 +103,13 @@
 				{% block sidebar %}
 				<h2>Latest Updates</h2>
 				{% for project in latest %}
-				<div class="thumbnail">
+				<div class="thumbnail item">
 					<a href="{% url 'project' project.idname %}">
-						<img class="t" src="{{ project.thumbnail.small.url }}" alt="{{ project.name }}">
+						<img src="{{ project.thumbnail.small.url }}" alt="{{ project.name }}">
 					</a>
 					<h3><a href="{% url 'project' project.idname %}">{{ project.name }}</a></h3>
 					<p>
-					{{ project.description }}
+					{{ project.description | truncatewords:15 }}
 					</p>
 				</div>
 
