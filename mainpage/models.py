@@ -7,6 +7,8 @@ from easy_thumbnails.files import get_thumbnailer
 from easy_thumbnails.alias import aliases
 from django_markdown.models import MarkdownField
 
+from django.template import loader, Context
+
 # Create your models here.
 class ProjectMapType(models.Model):
     name = models.CharField(max_length=25)
@@ -33,8 +35,11 @@ class Project(models.Model):
         return self.name
 
     def get_thumb(self):
-        thumb = get_thumbnailer(self.thumbnail).get_thumbnail(aliases.get('small')).tag
-        html = render_to_string('table/name_field.html', {'project': self, 'thumb': thumb})
+        thumb = get_thumbnailer(self.thumbnail).get_thumbnail(aliases.get('small')).tag(alt=self.name)
+        t = loader.get_template('table/name_field.html')
+        c = Context({'project': self, 'thumb': thumb})
+        html = t.render(c)
+        # html = render_to_string('table/name_field.html', {'project': self, 'thumb': thumb})
         return html
 
 class ProjectFile(models.Model):
