@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from easy_thumbnails.signals import saved_file
 from easy_thumbnails.signal_handlers import generate_aliases_global
 from easy_thumbnails.fields import ThumbnailerImageField
+from easy_thumbnails.files import get_thumbnailer
+from easy_thumbnails.alias import aliases
 from django_markdown.models import MarkdownField
 
 # Create your models here.
@@ -29,6 +31,9 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_thumb(self):
+        return get_thumbnailer(self.thumbnail).get_thumbnail(aliases.get('small')).tag
 
 class ProjectFile(models.Model):
     project = models.ForeignKey(Project)

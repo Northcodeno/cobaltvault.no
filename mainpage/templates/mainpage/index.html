@@ -67,8 +67,8 @@
 						{% endfor %}
 					</ol>
 
-					<div class="aspectwrapper">
-						<div class="carousel-inner aspectwrapper-inner">
+					<div class="embed-responsive embed-responsive-16by9">
+						<div class="carousel-inner embed-responsive-item">
 							{% for project in mostdl %}
 							<div class="item {% if forloop.first %}active{% endif %}">
 								<a href="{% url 'project' project.idname %}"><img src="{{ project.thumbnail.large }}" alt="{{ project.name }}"></a>

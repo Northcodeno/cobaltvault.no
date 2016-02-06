@@ -2,6 +2,7 @@ import django_tables2 as tables
 from .models import Project
 
 class ProjectTable(tables.Table):
+	thumbnail = tables.Column(accessor='get_thumb')
 	name = tables.Column(verbose_name='Name')
 	description = tables.Column(verbose_name='Description')
 	maptype = tables.Column(verbose_name='Type')
