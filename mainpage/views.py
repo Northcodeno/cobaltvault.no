@@ -36,3 +36,6 @@ def project_download(request, project_id):
 	
 	#response = HttpResponse(mimetype='application/force-download')
 	#response['Content-Disposition'] = 'attachment; filename=%s' % smart_str()
+
+def login(request):
+        return render(request, 'login/login.html', {})

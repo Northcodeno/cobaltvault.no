@@ -1,0 +1,11 @@
+{% block login %}
+<section id="loginform">
+	<form action="{% url 'login' %}" method="POST">
+		{% csrf_token %}
+		<input type="hidden" name="next" value="{% url 'index' %}" />
+		<input type="text" name="username" placeholder="Username" class="form-control" />
+		<input type="password" name="password" placeholder="Password" class="form-control" />
+		<input type="submit" value="Login" class="btn btn-default form-control" />
+	</form>
+</section>
+{% endblock %}
