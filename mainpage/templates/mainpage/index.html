@@ -71,7 +71,7 @@
 						<div class="carousel-inner embed-responsive-item">
 							{% for project in mostdl %}
 							<div class="item {% if forloop.first %}active{% endif %}">
-								<a href="{% url 'project' project.idname %}"><img src="{{ project.thumbnail.large }}" alt="{{ project.name }}"></a>
+								<a href="{% url 'project' project.idname %}"><img src="{{ project.thumbnail | thumbnail_url:'large' }}" alt="{{ project.name }}"></a>
 								<div class="carousel-caption">
 									<h3><a href="{% url 'project' project.idname %}">{{ project.name }}</a></h3>
 								</div>
