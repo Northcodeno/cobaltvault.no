@@ -5,6 +5,7 @@ from django.utils.encoding import smart_str
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django_tables2 import RequestConfig
+from django.contrib.auth.forms import AuthenticationForm
 
 from .models import Project
 from .tables import ProjectTable
@@ -38,4 +39,6 @@ def project_download(request, project_id):
 	#response['Content-Disposition'] = 'attachment; filename=%s' % smart_str()
 
 def login(request):
-        return render(request, 'login/login.html', {})
+	form = AuthenticationForm()
+
+	return render(request, 'login/login.html', {form:form})
