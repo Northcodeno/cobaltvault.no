@@ -41,4 +41,4 @@ def project_download(request, project_id):
 def login(request):
 	form = AuthenticationForm()
 
-	return render(request, 'login/login.html', {form:form})
+	return render(request, 'login/login.html', {'form':form})
