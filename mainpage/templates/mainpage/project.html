@@ -1,5 +1,5 @@
 {% extends "mainpage/index.html" %}
-{% load bootstrap3 staticfiles %}
+{% load bootstrap3 staticfiles thumbnail %}
 {% load django_markdown %}
 
 {% block head %}
@@ -7,14 +7,15 @@
 {% endblock %}
 
 {% block content %}
-<div class="col-md-9">
-	<h1>{{ project.name }}</h1>
-	{{ project.description | markdown }}
-	{{ project.pk }}
-</div>
+<section class="col-md-9">
+    <h1>{{ project.name }}</h1>
+    <img src="{{ project.thumbnail.large }}" />
+    {{ project.description | markdown }}
+    {{ project.pk }}
+</section>
 
-<div class="col-md-3">
-	<a href="{% url 'project_download' project.id %}" class="btn btn-primary btn-block">Download</a>	
-</div>
+<section class="col-md-3">
+    <a href="{% url 'project_download' project.id %}" class="btn btn-primary btn-block">Download</a>	
+</section>
 
 {% endblock %}
