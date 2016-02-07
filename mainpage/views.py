@@ -9,6 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm
 
 from .models import Project
 from .tables import ProjectTable
+from .forms import LoginForm
 from info.models import NewsPost
 
 # Create your views here.
@@ -39,6 +40,7 @@ def project_download(request, project_id):
 	#response['Content-Disposition'] = 'attachment; filename=%s' % smart_str()
 
 def login(request):
-	form = AuthenticationForm()
+	form = LoginForm()
+	#form.username.attrs['class'] ='form-control'
 
 	return render(request, 'login/login.html', {'form':form})
