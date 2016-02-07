@@ -12,7 +12,8 @@
                         <th {{ column.attrs.th.as_html }}>
                         {{ column.header }}
                         {% if column.orderable %}
-                                <a href="{% querystring table.prefixed_order_by_field=column.order_by_alias.next %}"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></a>
+                            <a href="{% querystring table.prefixed_order_by_field=column.order_by_alias %}"><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span></a>
+                            <a href="{% querystring table.prefixed_order_by_field=column.order_by_alias.opposite %}"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span></a>
                         {% endif %}
                         </th>
                     {% endfor %}
@@ -25,7 +26,7 @@
                     {% block table.tbody.row %}
                         <tr class="{% cycle "odd" "even" %}">
                             {% for column, cell in row.items %}
-                                <td {{ column.attrs.td.as_html }}>{{ cell | truncatewords:15 }}</td>
+                                <td {{ column.attrs.td.as_html }}>{{ cell | truncatewords_html:15 }}</td>
                             {% endfor %}
                         </tr>
                     {% endblock table.tbody.row %}
