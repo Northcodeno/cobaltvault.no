@@ -40,7 +40,7 @@ def project_download(request, project_id):
 	#response['Content-Disposition'] = 'attachment; filename=%s' % smart_str()
 
 def login(request):
-	form = LoginForm()
+	form = AuthenticationForm()
 	#form.username.attrs['class'] ='form-control'
 
 	return render(request, 'login/login.html', {'form':form})

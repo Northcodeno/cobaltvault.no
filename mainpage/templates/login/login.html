@@ -1,8 +1,10 @@
+{% load bootstrap3 %}
+{% bootstrap_css %}
 {% block login %}
 <section id="loginform">
 	<form action="{% url 'login' %}" method="POST">
 		{% csrf_token %}
-		{{ form }}
+		{% bootstrap_form form %}
 		<input type="submit">
 	</form>
 </section>
