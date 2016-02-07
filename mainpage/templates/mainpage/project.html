@@ -9,7 +9,7 @@
 {% block content %}
 <section class="col-md-9">
     <h1>{{ project.name }}</h1>
-    <img src="{{ project.thumbnail.large }}" />
+    <img src="{{ project.thumbnail | thumbnail_url:'large' }}" />
     {{ project.description | markdown }}
     {{ project.pk }}
 </section>
