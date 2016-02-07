@@ -1,0 +1,21 @@
+{% load querystring from django_tables2 %}
+{% load i18n %}
+{% load blocktrans trans from i18n %}
+
+<ul class="pager">
+    
+    <li class="previous">
+        <a href="{% if table.page.has_previous %}{% querystring table.prefixed_page_field=table.page.previous_page_number %}{% else %}#{% endif %}" class="btn btn-default {% if not table.page.has_previous %}disabled{% endif %}">
+            {% trans 'previous' %}
+        </a>
+    <li class="cardinality">
+        {% blocktrans with table.page.number as current and table.paginator.num_pages as total %}
+            Page {{ current }} of {{ total }}
+        {% endblocktrans %}
+    </li>
+    <li class="next">
+        <a href="{% if table.page.has_next %}{% querystring table.prefixed_page_field=table.page.next_page_number %}{% else %}#{% endif %}" class="btn btn-default {% if not table.page.has_next %}disabled{% endif %}">
+            {% trans 'next' %}
+        </a>
+    </li>
+</ul>
