@@ -9,7 +9,6 @@
 		
 		<link rel="stylesheet" href="{% static 'mainpage/css/flatly.min.css' %}">
 		<link rel="stylesheet" href="{% static 'mainpage/css/main.css' %}">
-		{% bootstrap_messages %}
 		
 		<link rel="icon" type="images/png" href="{% static 'icon_small.png' %}" />
 		
@@ -57,6 +56,9 @@
 		{% endblock %}
 		
 		<section class="container" id="pagecontent">
+			{% block messages %}
+				{% bootstrap_messages %}
+			{% endblock %}
 			{% block content %}
 			<section class="col-md-8">
 				{% block main %}
