@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="author" content="Northcode" />
 
-		<link rel="stylesheet" href="//bootswatch.com/flatly/bootstrap.min.css">
+		<link rel="stylesheet" href="{% static 'mainpage/css/flatly.min.css' %}">
 		{% bootstrap_messages %}
 
 		<link rel="icon" type="images/png" href="{% static 'icon_small.png' %}" />
@@ -109,7 +109,7 @@
 					</a>
 					<h3><a href="{% url 'project' project.idname %}">{{ project.name }}</a></h3>
 					<p>
-					{{ project.description | truncatewords:15 }}
+					{{ project.description | markdown | truncatewords_html:15 }}
 					</p>
 				</div>
 
