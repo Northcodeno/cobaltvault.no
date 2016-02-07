@@ -131,7 +131,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-THUMBNAIL_URL = '/thumbnails/'
+MEDIA_ROOT = 'media/'
+MEDIA_URL = '/media/'
+THUMBNAIL_URL = 'thumbnails/'
 THUMBNAIL_ROOT = 'thumbnails/'
 
 THUMBNAIL_ALIASES = {
