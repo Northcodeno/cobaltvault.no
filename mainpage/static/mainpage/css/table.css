@@ -1,7 +1,15 @@
-.title {
+tr .title {
 	width: 15%;
 }
 
+tr .description {
+	width: 25%;
+}
+
+.table-thumbnail {
+	width: 100%;
+} 
+
 thead th {
-	font-size:15pt;
+
 }
