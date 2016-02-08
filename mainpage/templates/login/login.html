@@ -1,4 +1,5 @@
 {% block login %}
+{% if not user.is_authenticated %}
 <section id="loginform">
 	<h1>Login</h1>
 	<div class="well">
@@ -6,12 +7,12 @@
 		{% csrf_token %}
 		<div class="form-group">
 			<label class="sr-only" for="id-username">Username</label>
-			<input type="text" class="form-control input-sm" id="id-username" placeholder="Username">
+			<input type="text" class="form-control input-sm" id="id-username" name="username" placeholder="Username">
 		</div>
 			
 		<div class="form-group">
 			<label class="sr-only" for="id-password">Password</label>
-			<input type="text" class="form-control input-sm" id="id-password" placeholder="Password">
+			<input type="password" class="form-control input-sm" id="id-password" name="password" placeholder="Password">
 		</div>
 		<div class="form-group login-form row">
 			<div class="col-md-6">
@@ -24,4 +25,5 @@
 	</form>
 	</div>
 </section>
+{% endif %}
 {% endblock %}

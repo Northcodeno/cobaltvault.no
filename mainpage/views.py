@@ -1,3 +1,4 @@
+from django.utils.translation import ungettext_lazy
 from django.shortcuts import render
 from django.http import Http404
 from django.views.generic.list import ListView
@@ -5,7 +6,16 @@ from django.utils.encoding import smart_str
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django_tables2 import RequestConfig
+from django.contrib.auth import login
+from django.contrib.auth import logout
+from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django import forms
+
+from pprint import pprint
+import sys
 
 from .models import Project
 from .tables import ProjectTable
@@ -39,8 +49,29 @@ def project_download(request, project_id):
 	#response = HttpResponse(mimetype='application/force-download')
 	#response['Content-Disposition'] = 'attachment; filename=%s' % smart_str()
 
-def login(request):
-	form = AuthenticationForm()
-	#form.username.attrs['class'] ='form-control'
+def login_view(request):
+	if request.user.is_authenticated():
+		messages.info(request, 'You are already logged in')
+	else:
+		form = AuthenticationForm(data=request.POST)
+		try:
+			form.is_valid()
+			form.clean()
+			user = form.get_user()
+			login(request, user)
+			messages.success(request, 'You have logged in')
+		except forms.ValidationError as err:
+			messages.error(request, str(err)[2:-2])
+		except AttributeError:
+			messages.error(request, 'Could not log you in')
+	
 
-	return render(request, 'login/login.html', {'form':form})
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+def logout_view(request):
+	if not request.user.is_authenticated():
+		messages.info(request, 'You are not logged in')
+	else:
+		logout(request)
+		messages.info(request, 'You have been logged out')
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

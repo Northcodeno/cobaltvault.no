@@ -35,6 +35,9 @@
 				<nav class="navbar-collapse collapse" id="header-collapse">
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="{% url 'index' %}">{% bootstrap_icon 'home' %}</a></li>
+						{% if user.is_authenticated %}
+						<li><a href="{% url 'logout' %}">Logout</a></li>
+						{% endif %}
 						<li><a href="https://forum.cobaltvault.no">Cobalt Forum</a></li>
 						<li><a href="{% url 'list' %}">Projects</a></li>
 						<li class="dropdown">
