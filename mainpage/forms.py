@@ -1,8 +1,7 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
+from captcha.fields import ReCaptchaField
 
-class LoginForm(AuthenticationForm):
-	def __init__(self):
-		super(AuthenticationForm, self).__init__()
-		print(self.username)
-		return
+class RegForm(UserCreationForm):
+	email = forms.EmailField()
+	captcha = ReCaptchaField()

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'django_tables2',
     'django_markdown',
+    'captcha',
 
     'mainpage',
     'info',
@@ -143,3 +144,8 @@ THUMBNAIL_ALIASES = {
         'small': {'size': (320,180), 'crop': True}
     }
 }
+
+
+RECAPTCHA_PUBLIC_KEY = "6Lf4EM8SAAAAAKY7-rve1EqkpdzkF6HH0z1pkRh6"
+RECAPTCHA_PRIVATE_KEY = "6Lf4EM8SAAAAAO4Ko5GvfSi-nwr4PLHJOnp0go-6"
+NOCAPTCHA = True

@@ -1,0 +1,16 @@
+{% extends "mainpage/index.html" %}
+{% load bootstrap3 staticfiles django_markdown %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'mainpage/css/register.css' %}">
+{% endblock %}
+
+{% block main %}
+<h1>Register</h1>
+<form method="POST" action="{% url 'register' %}">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+
+
+</form>
+{% endblock %}

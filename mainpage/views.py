@@ -19,7 +19,7 @@ import sys
 
 from .models import Project
 from .tables import ProjectTable
-from .forms import LoginForm
+from .forms import RegForm
 from info.models import NewsPost
 
 # Create your views here.
@@ -48,6 +48,10 @@ def project_download(request, project_id):
 	
 	#response = HttpResponse(mimetype='application/force-download')
 	#response['Content-Disposition'] = 'attachment; filename=%s' % smart_str()
+
+def register_view(request):
+	form = RegForm()
+	return render(request, "mainpage/register.html", {'form': form})
 
 def login_view(request):
 	if request.user.is_authenticated():
