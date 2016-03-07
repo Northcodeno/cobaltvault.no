@@ -11,6 +11,7 @@ from django.contrib.auth import logout
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django import forms
 
@@ -50,6 +51,14 @@ def project_download(request, project_id):
 	#response['Content-Disposition'] = 'attachment; filename=%s' % smart_str()
 
 def register_view(request):
+	if request.method == 'POST':
+		form = RegForm(data=request.POST)
+		try:
+			form.is_valid()
+			form.clean()
+			form.save()
+			messages.success(request, 'You have successfully registered')
+			return HttpResponseRedirect(resolve('index'))
 	form = RegForm()
 	return render(request, "mainpage/register.html", {'form': form})
 
