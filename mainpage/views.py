@@ -22,6 +22,7 @@ import random
 import uuid
 
 from .models import Project
+from .models import RegUser
 from .tables import ProjectTable
 from .forms import RegForm
 from info.models import NewsPost
@@ -78,7 +79,18 @@ def register_view(request):
 	return render(request, "mainpage/register.html", {'form': form})
 
 def activate(request, activation_id):
-	return
+	try:
+		yuki = RegUser.objects.get(activation_id=activation_id)
+		if yuki.user.is_active == False:
+			yuki.user.is_active == True
+			yuki.user.save()
+			messages.success(request, 'Your account has been successfully activated. You can log in now')
+		else:
+			messages.warning(request, 'Your account is already activated')
+	except RegUser.DoesNotExist as err:
+		messages.error(request, 'Invalid activation id')
+
+	return HttpResponseRedirect(reverse('index'))
 
 def login_view(request):
 	if request.user.is_authenticated():

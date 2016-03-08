@@ -17,7 +17,7 @@ class ProjectMapType(models.Model):
     def __str__(self):
         return self.name
 
-class Yuki(models.Model): # https://www.youtube.com/watch?v=NI_fgwbmJg0 made it to 02:00:00 ...
+class RegUser(models.Model): # https://www.youtube.com/watch?v=NI_fgwbmJg0 made it to 02:00:00 ...
     user = models.OneToOneField(User)
     activation_key = models.CharField(max_length=255)
     
