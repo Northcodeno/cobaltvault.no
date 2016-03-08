@@ -17,6 +17,9 @@ class ProjectMapType(models.Model):
     def __str__(self):
         return self.name
 
+class Yuki(models.Model) 
+    user = models.OneToOneField(User)
+    activation_key = models.CharField(max_length=255)
     
 class Project(models.Model):
     idname = models.SlugField()

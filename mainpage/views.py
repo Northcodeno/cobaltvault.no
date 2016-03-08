@@ -58,7 +58,9 @@ def register_view(request):
 			form.clean()
 			form.save()
 			messages.success(request, 'You have successfully registered')
-			return HttpResponseRedirect(resolve('index'))
+			return HttpResponseRedirect(reverse('index'))
+		except forms.ValidationError as err:
+			messages.error(request, err)
 	form = RegForm()
 	return render(request, "mainpage/register.html", {'form': form})
 

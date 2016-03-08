@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^login$', views.login_view, name='login'),
     url(r'^logout$', views.logout_view, name='logout'),
     url(r'^register$', views.register_view, name='register'),
+    url(r'^activate/(?P<activation_id>[0-9A-Za-z-]+)/$', views.activate, name='activate')
 ]
