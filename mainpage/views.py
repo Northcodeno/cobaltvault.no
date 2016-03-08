@@ -17,6 +17,9 @@ from django import forms
 
 from pprint import pprint
 import sys
+import hashlib
+import random
+import uuid
 
 from .models import Project
 from .tables import ProjectTable
@@ -51,18 +54,31 @@ def project_download(request, project_id):
 	#response['Content-Disposition'] = 'attachment; filename=%s' % smart_str()
 
 def register_view(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('index'))
+
+	form = RegForm()
 	if request.method == 'POST':
 		form = RegForm(data=request.POST)
-		try:
-			form.is_valid()
-			form.clean()
-			form.save()
-			messages.success(request, 'You have successfully registered')
+		if form.is_valid():
+			data = {
+				'username': form.cleaned_data['username'],
+				'email': form.cleaned_data['email'],
+				'password1': form.cleaned_data['password1'],
+			}
+
+			salt = str(uuid.uuid4().int)[:5]
+			usernamesalt = data['username']
+			data['activation_key'] = hashlib.sha1((salt + usernamesalt).encode('utf8')).hexdigest()
+			form.send_email(data)
+			form.save(data)
+			messages.success(request, 'You have successfully registered. Please check your mail and click the activation link')
 			return HttpResponseRedirect(reverse('index'))
-		except forms.ValidationError as err:
-			messages.error(request, err)
-	form = RegForm()
+
 	return render(request, "mainpage/register.html", {'form': form})
+
+def activate(request, activation_id):
+	return
 
 def login_view(request):
 	if request.user.is_authenticated():
