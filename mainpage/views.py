@@ -9,6 +9,7 @@ from django_tables2 import RequestConfig
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -118,3 +119,8 @@ def logout_view(request):
 		logout(request)
 		messages.info(request, 'You have been logged out')
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def profile(request, user_id):
+	u = User.objects.get(username=user_id)
+	return render(request, "mainpage/profile.html", {'user': u})
