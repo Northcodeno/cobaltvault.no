@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from captcha.fields import ReCaptchaField
 from django.core.validators import validate_slug, validate_email
 from mainpage.models import RegUser
+from django.template import Context
 
 class RegForm(forms.Form):
 	username = forms.CharField(label="Username", max_length=30, min_length=3, validators=[validate_slug])

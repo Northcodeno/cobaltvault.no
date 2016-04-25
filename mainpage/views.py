@@ -123,4 +123,5 @@ def logout_view(request):
 
 def profile(request, user_id):
 	u = User.objects.get(username=user_id)
-	return render(request, "mainpage/profile.html", {'user': u})
+	ru = RegUser.objects.get(user=u)
+	return render(request, "mainpage/profile.html", {'udata': ru})

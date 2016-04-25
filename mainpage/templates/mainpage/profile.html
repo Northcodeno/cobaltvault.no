@@ -3,15 +3,24 @@
 {% load render_table from django_tables2 %}
 
 {% block head %}
-<title>{{ user.username }}</title>
+<title>{{ udata.user.username }}</title>
 {% endblock %}
 
 
 {% block content %}
 
 <div class="col-md-4">
-	<h1>{{ user.username }}</h1>
-	Userdata
+	<h1>{{ udata.user.username }}</h1>
+	<table class="table">
+		<tr>
+			<td>Joined</td>
+			<td>{{ udata.date_registered }}</td>
+		</tr>
+		<tr>
+			<td>Maps</td>
+			<td><?php echo sizeof($Projects); ?></td>
+		</tr>
+    </table>
 </div>
 <div class="col-md-8">
 	<h2>Maps</h2>
