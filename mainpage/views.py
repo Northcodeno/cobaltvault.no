@@ -27,6 +27,7 @@ from .models import RegUser
 from .tables import ProjectTable
 from .forms import RegForm
 from .forms import CreateForm
+from .util import safeRedirect
 from info.models import NewsPost
 
 # Create your views here.
@@ -119,7 +120,7 @@ def logout_view(request):
 	else:
 		logout(request)
 		messages.info(request, 'You have been logged out')
-	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+	return safeRedirect(request, "index")
 
 
 def profile(request, user_id):
@@ -129,9 +130,10 @@ def profile(request, user_id):
 
 def create_project(request):
 
+
 	if not request.user.is_authenticated():
 		messages.error(request, 'You need to be logged in to create a project')
-		return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+		return safeRedirect(request, "index")
 
 	form = CreateForm()
 
