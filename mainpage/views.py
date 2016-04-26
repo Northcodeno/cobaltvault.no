@@ -21,7 +21,6 @@ import sys
 import hashlib
 import random
 import uuid
-import json
 
 from .models import Project
 from .models import RegUser
@@ -137,10 +136,10 @@ def create_project(request):
 	form = CreateForm()
 
 	if request.method == 'POST':
-		form = CreateForm(request.POST, request.FILES)
-		print(json.dumps(request.POST))
+		form = CreateForm(data=request.POST, files=request.FILES)
 		if form.is_valid():
 			form.clean()
-			form.save(request.user)
+			proj = form.save(request.user)
+			return HttpResponseRedirect(reverse('project', args=[proj.idname]))
 
 	return render(request, "mainpage/create.html", {'form': form})

@@ -7,10 +7,12 @@ from captcha.fields import ReCaptchaField
 from django.core.validators import validate_slug, validate_email
 from mainpage.models import RegUser
 from django.template import Context
+from django.template.defaultfilters import slugify
 
 from django_markdown.widgets import MarkdownWidget
 
 from .models import Project
+import re
 
 class RegForm(forms.Form):
 	username = forms.CharField(label="Username", max_length=30, min_length=3, validators=[validate_slug])
@@ -49,14 +51,19 @@ class RegForm(forms.Form):
 
 class CreateForm(ModelForm):
 
+	def clean_file(self):
+		if not re.match('^.*\.(zip)$', self.files['file'].name):
+			raise forms.ValidationError(
+				'Invalid file type',
+				code='invalid_filetype')
+
+		return self.files['file']
+
 	def clean(self):
-
-		# TODO: Check filetypes
-
-		return self.cleaned_data
+		print(self.files)
 
 	def save(self, user):
-		slug = ''.join(e for e in self.cleaned_data['name'] if e.isalnum())
+		slug = slugify(self.cleaned_data['name'])
 		if Project.objects.filter(idname=slug).exists():
 			num = 2
 			while Project.objects.filter(idname=(slug + str(num))).exists():
@@ -72,6 +79,8 @@ class CreateForm(ModelForm):
 			thumbnail=self.cleaned_data['thumbnail'],
 			file=self.cleaned_data['file'])
 		proj.save()
+
+		return proj
 
 	class Meta:
 		model = Project

@@ -28,7 +28,7 @@ class RegUser(models.Model):
 
 class Project(models.Model):
     idname = models.SlugField()
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=40, unique=True)
     description = MarkdownField()
     maptype = models.ForeignKey(ProjectMapType)
     downloads = models.PositiveIntegerField(default=0)
