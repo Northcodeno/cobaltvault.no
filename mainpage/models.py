@@ -65,6 +65,9 @@ class Comment(models.Model):
     messsage = MarkdownField(max_length=500)
     date = models.DateTimeField(auto_now_add=True)
     project = models.ForeignKey(Project)
-    replyto = models.ForeignKey("Comment",null=True)
+    replyto = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     
+    def get_replies(self):
+        return Comment.objects.filter(project=self.project, replyto=self)
+
 saved_file.connect(generate_aliases_global)
