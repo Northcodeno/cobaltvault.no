@@ -112,7 +112,7 @@ def login_view(request):
 			messages.error(request, 'Could not log you in')
 	
 
-	return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+	return safeRedirect(request, "index")
 
 def logout_view(request):
 	if not request.user.is_authenticated():
