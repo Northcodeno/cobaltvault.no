@@ -10,7 +10,7 @@
 
 <h1>Create Project</h1>
 
-<form role="form" method="post" enctype="multipart/form-data">
+<form action="{% url 'create_project' %}" role="form" method="post" enctype="multipart/form-data">
 	{% csrf_token %}
 	{% bootstrap_form form %}
 

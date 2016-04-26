@@ -135,7 +135,7 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = 'media/'
 MEDIA_URL = '/media/'
 THUMBNAIL_URL = 'thumbnails/'
-THUMBNAIL_ROOT = 'thumbnails/'
+THUMBNAIL_ROOT = 'media/thumbnails/'
 
 THUMBNAIL_ALIASES = {
     '': {

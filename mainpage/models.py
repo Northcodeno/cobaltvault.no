@@ -31,7 +31,7 @@ class Project(models.Model):
     name = models.CharField(max_length=40)
     description = MarkdownField()
     maptype = models.ForeignKey(ProjectMapType)
-    downloads = models.PositiveIntegerField()
+    downloads = models.PositiveIntegerField(default=0)
     date_created = models.DateTimeField(auto_now_add = True)
     date_modified = models.DateTimeField(auto_now = True)
     author = models.ManyToManyField(User)

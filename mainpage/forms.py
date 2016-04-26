@@ -55,23 +55,23 @@ class CreateForm(ModelForm):
 
 		return self.cleaned_data
 
-	def save(self, data, user):
-		p = Project()
-		p.name = data['name']
-		slug = ''.join(e for e in data['name'] if e.isalnum())
+	def save(self, user):
+		slug = ''.join(e for e in self.cleaned_data['name'] if e.isalnum())
 		if Project.objects.filter(idname=slug).exists():
 			num = 2
-			while Projects.objects.filter(idname=slug.join(num)).exists():
+			while Project.objects.filter(idname=(slug + str(num))).exists():
 				num += 1
-			slug = slug.join(num)
+			slug = slug + str(num)
 
-		p.idname = slug
-		p.maptype = data['maptype']
-		p.author = user
-		p.version = data['version']
-		p.thumbnail = data['thumbnail']
-		p.file = data['file']
-		p.save()
+		proj = Project.objects.create(
+			idname=slug,
+			name=self.cleaned_data['name'],
+			description=self.cleaned_data['description'],
+			maptype=self.cleaned_data['maptype'],
+			version=self.cleaned_data['version'],
+			thumbnail=self.cleaned_data['thumbnail'],
+			file=self.cleaned_data['file'])
+		proj.save()
 
 	class Meta:
 		model = Project

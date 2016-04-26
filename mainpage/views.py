@@ -21,6 +21,7 @@ import sys
 import hashlib
 import random
 import uuid
+import json
 
 from .models import Project
 from .models import RegUser
@@ -129,12 +130,17 @@ def profile(request, user_id):
 
 def create_project(request):
 
+	if not request.user.is_authenticated():
+		messages.error(request, 'You need to be logged in to create a project')
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
 	form = CreateForm()
 
 	if request.method == 'POST':
-		form = CreateForm(data=request.POST)
+		form = CreateForm(request.POST, request.FILES)
+		print(json.dumps(request.POST))
 		if form.is_valid():
 			form.clean()
-			form.save()
+			form.save(request.user)
 
 	return render(request, "mainpage/create.html", {'form': form})
