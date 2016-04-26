@@ -35,9 +35,11 @@ class Project(models.Model):
     date_created = models.DateTimeField(auto_now_add = True)
     date_modified = models.DateTimeField(auto_now = True)
     author = models.ManyToManyField(User)
-    version = models.CharField(max_length=10)
-    ispublic = models.BooleanField()
+    version = models.CharField(max_length=10, blank=True)
+    ispublic = models.BooleanField(default=True)
     thumbnail = ThumbnailerImageField(upload_to="thumbnails/",resize_source=dict(size=(1920,1080), sharpen=True))
+    file = models.FileField(upload_to="projects/")
+
 
     def __str__(self):
         return self.name
@@ -52,17 +54,6 @@ class Project(models.Model):
 
     def get_pretty_authors(self):
         return loader.get_template('table/author_field.html').render(Context({'authors':self.author.all()}))
-
-class ProjectFile(models.Model):
-    project = models.ForeignKey(Project)
-    filename = models.FileField()
-    FILE_TYPES= (
-        (1, "map"),
-        (2, "localization"),
-        (3, "music"),
-        (4, "other"),
-        )
-    filetype = models.PositiveIntegerField(choices=FILE_TYPES,default=1)
 
 class ProjectVote(models.Model):
     user = models.ForeignKey(User,on_delete = models.CASCADE)

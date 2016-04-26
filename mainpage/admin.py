@@ -4,6 +4,5 @@ from .models import *
 # Register your models here.
 admin.site.register(Project)
 admin.site.register(ProjectMapType)
-admin.site.register(ProjectFile)
 admin.site.register(ProjectVote)
 admin.site.register(RegUser)

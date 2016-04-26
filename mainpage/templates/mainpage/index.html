@@ -12,6 +12,7 @@
 		
 		<link rel="icon" type="images/png" href="{% static 'icon_small.png' %}" />
 		
+		{% bootstrap_javascript jquery=True %}
 		{% block head %}
 		<title>Cobalt Vault</title>
 		<meta name="description" content="Download Cobalt Maps and Mods at a central place or share your own creations!" />
@@ -41,7 +42,7 @@
 						<li class="dropdown">
 							<a href="#" data-toggle="dropdown">{{ user.username }} <span class="caret"/></a>
 							<ul class="dropdown-menu">
-								<li><a href="#"><span class="glyphicon glyphicon-user"/> Profile</a></li>
+								<li><a href="{% url 'profile' user.username %}"><span class="glyphicon glyphicon-user"/> Profile</a></li>
 								<li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"/> Logout</a></li>
 							</ul>
 						</li>
@@ -134,6 +135,6 @@
 	</body>
 	
 	{% block scripts %}
-	{% bootstrap_javascript jquery=True %}
 	{% endblock %}
+	{% block afterscripts %}{% endblock %}
 </html>

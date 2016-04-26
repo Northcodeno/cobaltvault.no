@@ -13,5 +13,6 @@ urlpatterns = [
     url(r'^logout$', views.logout_view, name='logout'),
     url(r'^register$', views.register_view, name='register'),
     url(r'^activate/(?P<activation_id>[0-9A-Za-z-]+)/$', views.activate, name='activate'),
-    url(r'^u/(?P<user_id>[0-9A-Za-z-]+)/$', views.profile, name='profile')
+    url(r'^u/(?P<user_id>[0-9A-Za-z-]+)/$', views.profile, name='profile'),
+    url(r'^create$', views.create_project, name='create_project'),
 ]
