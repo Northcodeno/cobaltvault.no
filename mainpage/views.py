@@ -26,6 +26,7 @@ from .models import Project
 from .models import RegUser
 from .tables import ProjectTable
 from .forms import RegForm
+from .forms import CreateForm
 from info.models import NewsPost
 
 # Create your views here.
@@ -125,3 +126,15 @@ def profile(request, user_id):
 	u = User.objects.get(username=user_id)
 	ru = RegUser.objects.get(user=u)
 	return render(request, "mainpage/profile.html", {'udata': ru})
+
+def create_project(request):
+
+	form = CreateForm()
+
+	if request.method == 'POST':
+		form = CreateForm(data=request.POST)
+		if form.is_valid():
+			form.clean()
+			form.save()
+
+	return render(request, "mainpage/create.html", {'form': form})
