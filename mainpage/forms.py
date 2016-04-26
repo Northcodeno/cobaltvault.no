@@ -85,3 +85,10 @@ class CreateForm(ModelForm):
 	class Meta:
 		model = Project
 		fields = ['name', 'description', 'maptype', 'version', 'thumbnail', 'file']
+		help_texts = {
+			'name': 'The name of your map',
+			'description': 'Provide a description of your map, the uploaded thumbnail will show up above the description',
+			'version': '(Optional) Provide a version in your own format so that people know when your map has updated',
+			'thumbnail': 'Upload a thumbnail which will show up on the frontpage, the list and on the project description (allowed file types: jpg,png)',
+			'file': 'Upload a zip file with your project files (only zip files allowed)'
+		}
