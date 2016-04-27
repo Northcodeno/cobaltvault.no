@@ -52,6 +52,22 @@ def project_download(request, project_id):
 	#response = HttpResponse(mimetype='application/force-download')
 	#response['Content-Disposition'] = 'attachment; filename=%s' % smart_str()
 
+def project_create(request):
+	if not request.user.is_authenticated():
+		messages.error(request, 'You need to be logged in to create a project')
+		return safeRedirect(request, "index")
+
+	form = CreateForm()
+
+	if request.method == 'POST':
+		form = CreateForm(data=request.POST, files=request.FILES)
+		if form.is_valid():
+			form.clean()
+			proj = form.save(request.user)
+			return HttpResponseRedirect(reverse('project', args=[proj.idname]))
+
+	return render(request, "mainpage/create.html", {'form': form})
+
 def register_view(request):
 	if request.user.is_authenticated():
 		return HttpResponseRedirect(reverse('index'))
@@ -117,26 +133,7 @@ def logout_view(request):
 		messages.info(request, 'You have been logged out')
 	return safeRedirect(request, "index")
 
-
 def profile(request, user_id):
 	u = User.objects.get(username=user_id)
 	ru = RegUser.objects.get(user=u)
 	return render(request, "mainpage/profile.html", {'udata': ru})
-
-def create_project(request):
-
-
-	if not request.user.is_authenticated():
-		messages.error(request, 'You need to be logged in to create a project')
-		return safeRedirect(request, "index")
-
-	form = CreateForm()
-
-	if request.method == 'POST':
-		form = CreateForm(data=request.POST, files=request.FILES)
-		if form.is_valid():
-			form.clean()
-			proj = form.save(request.user)
-			return HttpResponseRedirect(reverse('project', args=[proj.idname]))
-
-	return render(request, "mainpage/create.html", {'form': form})

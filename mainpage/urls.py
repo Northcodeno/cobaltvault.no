@@ -14,5 +14,5 @@ urlpatterns = [
     url(r'^register$', views.register_view, name='register'),
     url(r'^activate/(?P<activation_id>[0-9A-Za-z-]+)/$', views.activate, name='activate'),
     url(r'^u/(?P<user_id>[0-9A-Za-z-]+)/$', views.profile, name='profile'),
-    url(r'^create$', views.create_project, name='project_create'),
+    url(r'^create$', views.project_create, name='project_create'),
 ]
