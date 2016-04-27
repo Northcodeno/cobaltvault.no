@@ -11,16 +11,9 @@
 		{{ comment.message }}
 		{% if user.is_authenticated %}
 		<br>
-		<a class="btn btn-xs btn-default" role="button" data-toggle="collapse" href="#replyform-{{ comment.pk }}" aria-expanded="false" aria-controls="replyform-{{ comment.pk }}">Reply</a>
-		<div class="collapse" id="replyform-{{ comment.pk }}">
-		<form method="post" action="">
-			{% csrf_token %}
-			{% bootstrap_form form %}
-			<input type="hidden" name="replyto" value="{{ comment.pk }}">
-			<input type="submit" class="btn btn-sm btn-primary" value="Post Comment">
-		</div>
+		<a class="btn btn-xs btn-default commentbtn" replyid="{{ comment.pk }}" replyname="{{ comment.author.username }}" role="button" href="#comment" value="Reply">Reply</a>
 		{% endif %}
-		{% include "mainpage/project_comments.html" with comments=comment.get_replies form=form %}
+		{% include "mainpage/project_comments.html" with comments=comment.get_replies %}
 	</div>
 
 </div>

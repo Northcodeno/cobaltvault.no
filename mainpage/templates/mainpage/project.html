@@ -13,12 +13,13 @@
     <img src="{{ project.thumbnail | thumbnail_url:'large' }}" />
     {{ project.description | markdown }}
 
-    <h1>Comments</h1>
+    <h1 id="comment">Comments</h1>
     {% if user.is_authenticated %}
     <form method="post" action="{% url 'project' project.idname %}" role="form">
     	{% csrf_token %}
     	{% bootstrap_form form %}
-    	<input type="submit" class="btn btn-primary" value="Post Comment">
+    	<input type="hidden" value="" name="replyto" id="replyto">
+    	<input type="submit" class="btn btn-primary" value="Post Comment" id="post-comment">
     </form>
     {% endif %}
     {% include "mainpage/project_comments.html" with comments=comments form=form %}
@@ -32,4 +33,8 @@
 </section>
 
 
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'mainpage/js/project.js' %}"></script>
 {% endblock %}
