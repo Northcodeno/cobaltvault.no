@@ -4,6 +4,7 @@
 
 {% block head %}
 <title>{{ project.name }}</title>
+{% markdown_media %}
 {% endblock %}
 
 {% block content %}
@@ -11,11 +12,24 @@
     <h1>{{ project.name }}</h1>
     <img src="{{ project.thumbnail | thumbnail_url:'large' }}" />
     {{ project.description | markdown }}
+
+    <h1>Comments</h1>
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'project' project.idname %}" role="form">
+    	{% csrf_token %}
+    	{% bootstrap_form form %}
+    	<input type="submit" class="btn btn-primary" value="Post Comment">
+    </form>
+    {% endif %}
+    {% include "mainpage/project_comments.html" with comments=comments form=form %}
+    
+	<div style="height:300px"></div>
 </section>
 
 <section class="col-md-3">
 	<h1>Info</h1>
     <a href="{% url 'project_download' project.id %}" class="btn btn-primary btn-block">Download</a>	
 </section>
+
 
 {% endblock %}

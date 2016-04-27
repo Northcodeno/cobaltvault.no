@@ -1,4 +1,8 @@
-import hashlib, random, sys, uuid, os
+import hashlib
+import os
+import random
+import sys
+import uuid
 from pprint import pprint
 
 from django import forms
@@ -7,7 +11,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from wsgiref.util import FileWrapper
 from django.db.models import Q
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -16,9 +19,10 @@ from django.utils.translation import ungettext_lazy
 from django.views.generic.list import ListView
 from django_tables2 import RequestConfig
 from info.models import NewsPost
+from wsgiref.util import FileWrapper
 
-from .forms import CreateForm, RegForm
-from .models import Project, RegUser
+from .forms import CommentForm, CreateForm, RegForm
+from .models import Comment, Project, RegUser
 from .tables import ProjectTable
 from .util import safeRedirect
 
@@ -41,7 +45,25 @@ def project(request, project_id):
 		project = get_object_or_404(Project, pk=project_id)
 	else:
 		project = get_object_or_404(Project, idname=project_id)
-	return render(request, "mainpage/project.html", {'project': project})
+
+	context = {'project': project}
+
+	if request.user.is_authenticated():
+		if request.method == 'POST':
+			context['form'] = CommentForm(data=request.POST)
+			if context['form'].is_valid():
+				context['form'].clean()
+				replyto = None
+				if 'replyto' in request.POST:
+					replyto = Comment.objects.get(pk=request.POST['replyto'])
+				context['form'].save(user=request.user, project=project, replyto=replyto)
+				messages.success(request, 'Your comment has been submitted')
+		context['form'] = CommentForm()
+
+	context['comments'] = Comment.objects.filter(project=project, replyto=None)
+
+
+	return render(request, "mainpage/project.html", context)
 
 def project_download(request, project_id):
 	project = get_object_or_404(Project, Q(pk=project_id)|Q(idname=project_id))
@@ -77,6 +99,7 @@ def register_view(request):
 	if request.method == 'POST':
 		form = RegForm(data=request.POST)
 		if form.is_valid():
+			form.clean()
 			data = {
 				'username': form.cleaned_data['username'],
 				'email': form.cleaned_data['email'],

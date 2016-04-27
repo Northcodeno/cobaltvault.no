@@ -12,7 +12,7 @@ from django.template.defaultfilters import slugify
 from django_markdown.widgets import MarkdownWidget
 from mainpage.models import RegUser
 
-from .models import Project
+from .models import Comment, Project
 
 
 class RegForm(forms.Form):
@@ -92,4 +92,25 @@ class CreateForm(ModelForm):
 			'version': '(Optional) Provide a version in your own format so that people know when your map has updated',
 			'thumbnail': 'Upload a thumbnail which will show up on the frontpage, the list and on the project description (allowed file types: jpg,png)',
 			'file': 'Upload a zip file with your project files (only zip files allowed)'
+		}
+
+class CommentForm(ModelForm):
+
+	def save(self, user, project, replyto=None):
+		c = Comment.objects.create(
+			author=user,
+			message=self.cleaned_data['message'],
+			project=project,
+			replyto=replyto
+			)
+
+		c.save()
+		return c
+
+	class Meta:
+		model = Comment
+		fields = ['message']
+		labels = {'message': 'Submit a comment'}
+		widgets = {
+			'message': forms.Textarea(attrs={'rows': 4})
 		}

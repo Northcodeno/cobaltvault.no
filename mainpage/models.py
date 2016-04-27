@@ -62,7 +62,7 @@ class ProjectVote(models.Model):
 
 class Comment(models.Model):
     author = models.ForeignKey(User)
-    message = MarkdownField(max_length=500)
+    message = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     project = models.ForeignKey(Project)
     replyto = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
