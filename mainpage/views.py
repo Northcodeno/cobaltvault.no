@@ -68,7 +68,7 @@ def project(request, project_id):
 			if context['form'].is_valid():
 				context['form'].clean()
 				replyto = None
-				if 'replyto' in request.POST:
+				if request.POST['replyto']:
 					replyto = Comment.objects.get(pk=request.POST['replyto'])
 				context['form'].save(user=request.user, project=project, replyto=replyto)
 				messages.success(request, 'Your comment has been submitted')
