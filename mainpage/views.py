@@ -1,7 +1,4 @@
-import hashlib
-import random
-import sys
-import uuid
+import hashlib, random, sys, uuid, os
 from pprint import pprint
 
 from django import forms
@@ -10,8 +7,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from wsgiref.util import FileWrapper
 from django.db.models import Q
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.utils.encoding import smart_str
 from django.utils.translation import ungettext_lazy
@@ -46,11 +44,14 @@ def project(request, project_id):
 	return render(request, "mainpage/project.html", {'project': project})
 
 def project_download(request, project_id):
-	return
-	#project = get_object_or_404(Project, Q(pk=project_id)|Q(idname=project_id))
+	project = get_object_or_404(Project, Q(pk=project_id)|Q(idname=project_id))
 	
-	#response = HttpResponse(mimetype='application/force-download')
-	#response['Content-Disposition'] = 'attachment; filename=%s' % smart_str()
+
+	wrapper = FileWrapper(open(project.file.path, "rb"))
+	response = HttpResponse(wrapper, content_type='application/zip')
+	response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(os.path.basename(project.file.name))
+	response['Content-Length'] = os.path.getsize(project.file.path)
+	return response
 
 def project_create(request):
 	if not request.user.is_authenticated():
