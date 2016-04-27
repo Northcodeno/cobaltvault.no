@@ -1,18 +1,19 @@
-from django import forms
-from django.forms import ModelForm
-from django.core.mail import send_mail
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+import re
+
 from captcha.fields import ReCaptchaField
-from django.core.validators import validate_slug, validate_email
-from mainpage.models import RegUser
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.core.validators import validate_email, validate_slug
+from django.forms import ModelForm
 from django.template import Context
 from django.template.defaultfilters import slugify
-
 from django_markdown.widgets import MarkdownWidget
+from mainpage.models import RegUser
 
 from .models import Project
-import re
+
 
 class RegForm(forms.Form):
 	username = forms.CharField(label="Username", max_length=30, min_length=3, validators=[validate_slug])

@@ -1,5 +1,7 @@
 import django_tables2 as tables
+
 from .models import Project
+
 
 class ProjectTable(tables.Table):
 	title = tables.Column(accessor='get_thumb', verbose_name='', orderable=False)

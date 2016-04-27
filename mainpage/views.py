@@ -1,34 +1,29 @@
-from django.utils.translation import ungettext_lazy
-from django.shortcuts import render
-from django.http import Http404
-from django.views.generic.list import ListView
-from django.utils.encoding import smart_str
-from django.db.models import Q
-from django.shortcuts import get_object_or_404
-from django_tables2 import RequestConfig
-from django.contrib.auth import login
-from django.contrib.auth import logout
-from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib import messages
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from django import forms
-
-from pprint import pprint
-import sys
 import hashlib
 import random
+import sys
 import uuid
+from pprint import pprint
 
-from .models import Project
-from .models import RegUser
-from .tables import ProjectTable
-from .forms import RegForm
-from .forms import CreateForm
-from .util import safeRedirect
+from django import forms
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+from django.db.models import Q
+from django.http import Http404, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.utils.encoding import smart_str
+from django.utils.translation import ungettext_lazy
+from django.views.generic.list import ListView
+from django_tables2 import RequestConfig
 from info.models import NewsPost
+
+from .forms import CreateForm, RegForm
+from .models import Project, RegUser
+from .tables import ProjectTable
+from .util import safeRedirect
+
 
 # Create your views here.
 def index(request):

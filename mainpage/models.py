@@ -1,15 +1,15 @@
-from django.db import models
-from django.contrib.auth.models import User
-from easy_thumbnails.signals import saved_file
-from easy_thumbnails.signal_handlers import generate_aliases_global
-from easy_thumbnails.fields import ThumbnailerImageField
-from easy_thumbnails.files import get_thumbnailer
-from easy_thumbnails.alias import aliases
-from django_markdown.models import MarkdownField
 import datetime
 
+from django.contrib.auth.models import User
+from django.db import models
+from django.template import Context, loader
+from django_markdown.models import MarkdownField
+from easy_thumbnails.alias import aliases
+from easy_thumbnails.fields import ThumbnailerImageField
+from easy_thumbnails.files import get_thumbnailer
+from easy_thumbnails.signal_handlers import generate_aliases_global
+from easy_thumbnails.signals import saved_file
 
-from django.template import loader, Context
 
 # Create your models here.
 class ProjectMapType(models.Model):

@@ -1,5 +1,6 @@
-from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+
 
 def safeRedirect(request, fallback):
 	if request.get_raw_uri() == request.META.get('HTTP_REFERER', '/'):
