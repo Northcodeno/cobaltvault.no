@@ -1,9 +1,11 @@
-{% load bootstrap3 staticfiles %}
+{% load bootstrap3 staticfiles thumbnail %}
 {% for comment in comments %}
 <div class="media">
 	<div class="media-left">
 		<a href="{% url 'profile' comment.author.username %}">
-			<img heigth="64" width="64" class="media-object" src="{% static 'profile.png' %}" alt="{{ comment.author.username }}">
+
+			<img heigth="64" width="64" class="media-object" src="{% if comment.author.reguser.profile_image.name %}{{ comment.author.reguser.profile_image | thumbnail_url:'comment' }}{% else %}{% static 'profile.png' %}{% endif %}" alt="{{ comment.author.username }}">
+			
 		</a>
 	</div>
 	<div class="media-body">
