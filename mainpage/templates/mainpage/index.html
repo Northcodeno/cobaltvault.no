@@ -17,6 +17,7 @@
 		<title>Cobalt Vault</title>
 		<meta name="description" content="Download Cobalt Maps and Mods at a central place or share your own creations!" />
 		<link rel="stylesheet" href="{% static 'mainpage/css/index.css' %}" />
+		{% if user.is_staff %}{% markdown_media %}{% endif %}
 		{% endblock %}
 	</head>
 	<body>
@@ -51,13 +52,12 @@
 						<li class="dropdown">
 							<a href="#" data-toggle="dropdown">Help <span class="caret" /></a>
 							<ul class="dropdown-menu">
-								<li><a href="#FAQ">FAQ</a></li>
-								<li><a href="#">Source code</a></li>
+								<li><a target="_blank" href="https://github.com/Northcodeno/cobaltvault.no">Source code</a></li>
 								<li class="divider"></li>
-								<li><a href="http://northcode.no">Northcode</a></li>
+								<li><a target="_blank" href="http://northcode.no">Northcode</a></li>
 								<li class="divider"></li>
-								<li><a href="http://playcobalt.com">Cobalt Homepage</a></li>
-								<li><a href="http://oxeyegames.com">Oxeye Games</a></li>
+								<li><a target="_blank" href="http://playcobalt.com">Cobalt Homepage</a></li>
+								<li><a target="_blank" href="http://oxeyegames.com">Oxeye Games</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -105,12 +105,20 @@
                 </div>
 
 				<section id="news">
-    					<h2>News</h2>
+					<h2>News</h2>
+					{% if user.is_staff %}
+					<form method="post" action="{% url 'index' %}" role="form">
+						{% csrf_token %}
+						{% bootstrap_form newsform %}
+						<input type="submit" class="btn btn-primary" value="Post">
+					</form>
+					{% endif %}
 					<section id="newsposts">
 						{% for post in news %}
 						<article class="newspost">
 							<h3>{{post.title}}</h3>
-							{{post.text|markdown}}
+							<p>{{post.text|markdown}}</p>
+							<em>{{post.date|date:"Y.m.d"}}</em>
 						</article>
 						{% endfor %}
 					</section>
@@ -140,8 +148,39 @@
 			{% endblock %}
 		</section>
 		<div class="spacer"></div>
+
+		<nav class="navbar navbar-default navbar-static-top footer">
+			<div class="container">
+				<div class="navbar-header">
+			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#footer-collapse">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			      </button>
+			    </div>
+
+			    <div class="collapse navbar-collapse" id="footer-collapse">
+			        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="navbar-form navbar-left">
+							<input type="hidden" name="cmd" value="_s-xclick">
+							<input type="hidden" name="hosted_button_id" value="T4JUNLJPEWAYY">
+							<input type="submit" value="Donate to show your support" class="btn btn-default" name="submit"> 
+					</form>
+					
+					<p class="nav navbar-text navbar-right">Copyright <a href="http://northcode.no/">Northcode</a> 2016 | Contact: <a href="mailto:jens@northcode.no">jens@northcode.no</a> | OpenSource <a href="https://github.com/Jenjen1324/cobaltvault.no">GitHub</a></p>
+			    </div>
+		    </div>
+		</nav>
+
+		<script>
+		$(document).ready(function() {
+		    if($.browser.chrome)
+		        $("head").append('<style>/* Web Fonts*/ @font-face {    font-family: "webfont"; src: url("webfont.eot");    font-weight: normal;    font-style: normal; }}</style>');
+		});
+		</script>
+
+		{% block scripts %}
+		{% endblock %}
 	</body>
 	
-	{% block scripts %}
-	{% endblock %}
 </html>

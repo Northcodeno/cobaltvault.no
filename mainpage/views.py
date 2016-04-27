@@ -19,6 +19,7 @@ from django.utils.translation import ungettext_lazy
 from django.views.generic.list import ListView
 from django_tables2 import RequestConfig
 from info.models import NewsPost
+from info.forms import NewsForm
 from wsgiref.util import FileWrapper
 
 from .forms import CommentForm, CreateForm, RegForm, ProfileForm, ProjectForm
@@ -32,7 +33,20 @@ def index(request):
 	latest = Project.objects.order_by('-date_modified')[:5]
 	mostdl = Project.objects.order_by('-downloads')[:5]
 	news = NewsPost.objects.all()[:5]
-	return render(request, "mainpage/index.html", { 'latest': latest, 'mostdl': mostdl, 'news': news })
+
+	context = { 'latest': latest, 'mostdl': mostdl, 'news': news }
+
+	if request.user.is_authenticated() and request.user.is_staff:
+		context['newsform'] = NewsForm()
+		if request.method == 'POST':
+			newsform = NewsForm(data=request.POST)
+			if newsform.is_valid():
+				newsform.clean()
+				newsform.save()
+			else:
+				context['newsform'] = newsform
+
+	return render(request, "mainpage/index.html", context)
 
 def list(request):
 	table = ProjectTable(Project.objects.all())
