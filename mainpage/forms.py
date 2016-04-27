@@ -1,4 +1,4 @@
-import re
+import re, bleach
 
 from captcha.fields import ReCaptchaField
 from django import forms
@@ -13,7 +13,7 @@ from django_markdown.widgets import MarkdownWidget
 from mainpage.models import RegUser
 
 from .models import Comment, Project, RegUser
-
+from .util import MarkdownBlackList
 
 class RegForm(forms.Form):
 	username = forms.CharField(label="Username", max_length=30, min_length=3, validators=[validate_slug])
@@ -59,6 +59,9 @@ class CreateForm(ModelForm):
 				code='invalid_filetype')
 
 		return self.files['file']
+
+	def clean_description(self):
+		return bleach.clean(self.cleaned_data['description'], tags=MarkdownBlackList())
 
 	def save(self, user):
 		slug = slugify(self.cleaned_data['name'])
@@ -119,6 +122,9 @@ class ProfileForm(ModelForm):
 		fields = ['about', 'profile_image']
 
 class ProjectForm(ModelForm):
+
+	def clean_description(self):
+		return bleach.clean(self.cleaned_data['description'], tags=MarkdownBlackList())
 
 	class Meta:
 		model = Project

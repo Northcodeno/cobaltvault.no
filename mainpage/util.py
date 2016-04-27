@@ -7,3 +7,8 @@ def safeRedirect(request, fallback):
 		return HttpResponseRedirect(reverse(fallback))
 	else:
 		return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+class MarkdownBlackList(object):
+	def __contains__(self, value):
+		return value not in ['script']
