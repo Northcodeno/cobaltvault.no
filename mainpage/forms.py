@@ -12,7 +12,7 @@ from django.template.defaultfilters import slugify
 from django_markdown.widgets import MarkdownWidget
 from mainpage.models import RegUser
 
-from .models import Comment, Project
+from .models import Comment, Project, RegUser
 
 
 class RegForm(forms.Form):
@@ -114,3 +114,21 @@ class CommentForm(ModelForm):
 		widgets = {
 			'message': forms.Textarea(attrs={'rows': 4})
 		}
+
+class ProfileForm(ModelForm):
+
+	def save(self, user):
+		reguser = RegUser.objects.get(user=user)
+		reguser.about = self.cleaned_data['about']
+
+		print(self.cleaned_data)
+
+		if(self.cleaned_data['profile_image']):
+			reguser.profile_image.delete()
+			reguser.profile_image = self.cleaned_data['profile_image']
+
+		reguser.save()
+
+	class Meta:
+		model = RegUser
+		fields = ['about', 'profile_image']

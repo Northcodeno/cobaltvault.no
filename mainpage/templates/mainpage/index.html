@@ -42,9 +42,9 @@
 						<li class="dropdown">
 							<a href="#" data-toggle="dropdown">{{ user.username }} <span class="caret"/></a>
 							<ul class="dropdown-menu">
-								<li><a href="{% url 'profile' user.username %}"><span class="glyphicon glyphicon-user"/> Profile</a></li>
-								<li><a href="{% url 'project_create' %}"><span class="glyphicon glyphicon-plus"/> Create Project</a></li>
-								<li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"/> Logout</a></li>
+								<li><a href="{% url 'profile' user.username %}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+								<li><a href="{% url 'project_create' %}"><span class="glyphicon glyphicon-plus"></span> Create Project</a></li>
+								<li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 							</ul>
 						</li>
 						{% endif %}
@@ -139,6 +139,7 @@
 			</aside>
 			{% endblock %}
 		</section>
+		<div class="spacer"></div>
 	</body>
 	
 	{% block scripts %}

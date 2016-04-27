@@ -21,9 +21,9 @@ from django_tables2 import RequestConfig
 from info.models import NewsPost
 from wsgiref.util import FileWrapper
 
-from .forms import CommentForm, CreateForm, RegForm
+from .forms import CommentForm, CreateForm, RegForm, ProfileForm
 from .models import Comment, Project, RegUser
-from .tables import ProjectTable
+from .tables import ProjectTable, UserProjectTable
 from .util import safeRedirect
 
 
@@ -158,6 +158,26 @@ def logout_view(request):
 	return safeRedirect(request, "index")
 
 def profile(request, user_id):
+	context = {'isauthor': False}
 	u = User.objects.get(username=user_id)
 	ru = RegUser.objects.get(user=u)
-	return render(request, "mainpage/profile.html", {'udata': ru})
+	if request.user.is_authenticated() and request.user == u:
+		context['isauthor'] = True
+		context['form'] = ProfileForm(initial={'about': ru.about})
+		if request.method == 'POST':
+			form = ProfileForm(data=request.POST, files=request.FILES)
+			if form.is_valid():
+				form.clean()
+				form.save(user=request.user)
+				messages.success(request, 'Info updated')
+				ru = RegUser.objects.get(user=u)
+
+			context['form'] = form
+
+
+	table = UserProjectTable(u.project_set.all())
+	table.paginate(page=request.GET.get('page',1), per_page=25)
+	context['udata'] = ru
+	context['table'] = table
+
+	return render(request, "mainpage/profile.html", context)

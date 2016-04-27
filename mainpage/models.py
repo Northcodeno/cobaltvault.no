@@ -22,7 +22,7 @@ class ProjectMapType(models.Model):
 class RegUser(models.Model):
     user = models.OneToOneField(User)
     activation_key = models.CharField(max_length=255)
-    # profile_image = ThumbnailerImageField(upload_to="")
+    profile_image = ThumbnailerImageField(upload_to="profile_images/",resize_source=dict(size=(500,500)), null=True, blank=True)
     date_registered = models.DateField(auto_now_add=True)
     about = models.TextField(default="I'm a metalface")
 
@@ -37,7 +37,7 @@ class Project(models.Model):
     author = models.ManyToManyField(User)
     version = models.CharField(max_length=10, blank=True)
     ispublic = models.BooleanField(default=True)
-    thumbnail = ThumbnailerImageField(upload_to="thumbnails/",resize_source=dict(size=(1920,1080), sharpen=True))
+    thumbnail = ThumbnailerImageField(upload_to="thumbnails/",resize_source=dict(size=(1920,1080)))
     file = models.FileField(upload_to="projects/")
 
 

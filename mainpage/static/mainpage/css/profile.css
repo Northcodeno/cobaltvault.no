@@ -1,0 +1,10 @@
+pre {
+	font-family: arial;
+	color: black;
+}
+
+.pimage {
+	width:100%;
+	max-width:100%;
+	height:auto;
+}

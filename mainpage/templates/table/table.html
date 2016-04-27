@@ -18,8 +18,8 @@
                         <th {{ column.attrs.th.as_html }}>
                         {{ column.header }}
                         {% if column.orderable %}
-                            <a href="{% querystring table.prefixed_order_by_field=column.order_by_alias %}"><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span></a>
-                            <a href="{% querystring table.prefixed_order_by_field=column.order_by_alias.opposite %}"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span></a>
+                            <br><a class="btn btn-xs btn-default" href="{% querystring table.prefixed_order_by_field=column.order_by_alias %}"><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span></a>
+                            <a class="btn btn-xs btn-default" href="{% querystring table.prefixed_order_by_field=column.order_by_alias.opposite %}"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span></a>
                         {% endif %}
                         </th>
                     {% endfor %}

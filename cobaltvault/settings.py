@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_tables2',
     'django_markdown',
     'captcha',
+    'django_cleanup',
 
     'mainpage',
     'info',
@@ -138,10 +139,13 @@ THUMBNAIL_URL = 'thumbnails/'
 THUMBNAIL_ROOT = 'media/thumbnails/'
 
 THUMBNAIL_ALIASES = {
-    '': {
+    'mainpage.Project.thumbnail': {
         'large': {'size': (800,452), 'crop': True},
         'medium': {'size': (600,340), 'crop': True},
         'small': {'size': (320,180), 'crop': True}
+    },
+    'mainpage.RegUser.profile_image': {
+        'comment': {'size': (64,64), 'crop': 'smart'},
     }
 }
 
