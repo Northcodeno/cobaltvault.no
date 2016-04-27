@@ -21,7 +21,7 @@ from django_tables2 import RequestConfig
 from info.models import NewsPost
 from wsgiref.util import FileWrapper
 
-from .forms import CommentForm, CreateForm, RegForm, ProfileForm
+from .forms import CommentForm, CreateForm, RegForm, ProfileForm, ProjectForm
 from .models import Comment, Project, RegUser
 from .tables import ProjectTable, UserProjectTable
 from .util import safeRedirect
@@ -62,12 +62,37 @@ def project(request, project_id):
 
 	context['comments'] = Comment.objects.filter(project=project, replyto=None)
 
+	context['isauthor'] = False
+	if request.user.is_authenticated and request.user.project_set.filter(pk=project.pk).exists():
+		context['isauthor'] = True
 
 	return render(request, "mainpage/project.html", context)
+
+def project_edit(request, project_id):
+	if (project_id.isdigit()):
+		project = get_object_or_404(Project, pk=project_id)
+	else:
+		project = get_object_or_404(Project, idname=project_id)
+	if not request.user.is_authenticated or not request.user.project_set.filter(pk=project.pk).exists():
+		messages.error(request, 'You need to be logged in and the author of the project to do that')
+		return safeRedirect(request, "index")
+
+	form = ProjectForm(instance=project)
+
+	if request.method == 'POST':
+		form = ProjectForm(instance=project, data=request.POST, files=request.FILES)
+		if form.is_valid():
+			form.clean()
+			form.save()
+			return HttpResponseRedirect(reverse('project', args=[project.idname]))
+
+	return render(request, "mainpage/project_edit.html", {'project': project, 'form': form})
 
 def project_download(request, project_id):
 	project = get_object_or_404(Project, Q(pk=project_id)|Q(idname=project_id))
 	
+	project.downloads += 1
+	project.save()
 
 	wrapper = FileWrapper(open(project.file.path, "rb"))
 	response = HttpResponse(wrapper, content_type='application/zip')
@@ -163,16 +188,14 @@ def profile(request, user_id):
 	ru = RegUser.objects.get(user=u)
 	if request.user.is_authenticated() and request.user == u:
 		context['isauthor'] = True
-		context['form'] = ProfileForm(initial={'about': ru.about})
 		if request.method == 'POST':
-			form = ProfileForm(data=request.POST, files=request.FILES)
+			form = ProfileForm(data=request.POST, files=request.FILES, instance=ru)
 			if form.is_valid():
 				form.clean()
-				form.save(user=request.user)
+				form.save()
 				messages.success(request, 'Info updated')
 				ru = RegUser.objects.get(user=u)
-
-			context['form'] = form
+		context['form'] = ProfileForm(instance=ru)
 
 
 	table = UserProjectTable(u.project_set.all())

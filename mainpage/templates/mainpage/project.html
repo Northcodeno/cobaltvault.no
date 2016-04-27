@@ -9,26 +9,56 @@
 
 {% block content %}
 <section class="col-md-9">
-    <h1>{{ project.name }}</h1>
-    <img src="{{ project.thumbnail | thumbnail_url:'large' }}" />
-    {{ project.description | markdown }}
+	<h1>{{ project.name }}</h1>
+	<img src="{{ project.thumbnail | thumbnail_url:'large' }}" />
+	{{ project.description | markdown }}
 
-    <h1 id="comment">Comments</h1>
-    {% if user.is_authenticated %}
-    <form method="post" action="{% url 'project' project.idname %}" role="form">
-    	{% csrf_token %}
-    	{% bootstrap_form form %}
-    	<input type="hidden" value="" name="replyto" id="replyto">
-    	<input type="submit" class="btn btn-primary" value="Post Comment" id="post-comment">
-    </form>
-    {% endif %}
-    {% include "mainpage/project_comments.html" with comments=comments form=form %}
-    
+	<h1 id="comment">Comments</h1>
+	{% if user.is_authenticated %}
+	<form method="post" action="{% url 'project' project.idname %}" role="form">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		<input type="hidden" value="" name="replyto" id="replyto">
+		<input type="submit" class="btn btn-primary" value="Post Comment" id="post-comment">
+	</form>
+	{% endif %}
+	{% include "mainpage/project_comments.html" with comments=comments form=form %}
+	
 </section>
 
 <section class="col-md-3">
 	<h1>Info</h1>
-    <a href="{% url 'project_download' project.id %}" class="btn btn-primary btn-block">Download</a>	
+	<a href="{% url 'project_download' project.id %}" class="btn btn-primary btn-block">Download</a>
+	<br>
+	<table class="table table-bordered">
+		<tr>
+			<td>Date Created</td>
+			<td>{{ project.date_created | date:"Y.m.d" }}</td>
+		</tr>
+		<tr>
+			<td>Last Update</td>
+			<td>{{ project.date_modified | date:"Y.m.d" }}</td>
+		</tr>
+		<tr>
+			<td>Map Type</td>
+			<td>{{ project.maptype }}</td>
+		</tr>
+		<tr>
+			<td>Version</td>
+			<td>{{ project.version }}</td>
+		</tr>
+		<tr>
+			<td>Downloads</td>
+			<td>{{ project.downloads }}</td>
+		</tr>
+		<tr>
+			<td>Authors</td>
+			<td>{{ project.get_pretty_authors }}</td>
+		</tr>
+	</table>
+	{% if isauthor %}
+	<a href="{% url 'project_edit' project.id %}" class="btn btn-warning btn-block">Edit</a>
+	{% endif %}
 </section>
 
 

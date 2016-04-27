@@ -1,0 +1,20 @@
+{% extends "mainpage/index.html" %}
+{% load bootstrap3 staticfiles django_markdown %}
+
+{% block head %}
+<title>Edit Project</title>
+{% markdown_media %}
+{% endblock %}
+
+{% block content %}
+
+<h1>Edit Project</h1>
+
+<form action="{% url 'project_edit' project.idname %}" role="form" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+
+	<input type="submit" class="btn btn-primary" value="Update">
+</form>
+
+{% endblock %}

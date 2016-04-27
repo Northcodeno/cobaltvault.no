@@ -60,9 +60,6 @@ class CreateForm(ModelForm):
 
 		return self.files['file']
 
-	def clean(self):
-		print(self.files)
-
 	def save(self, user):
 		slug = slugify(self.cleaned_data['name'])
 		if Project.objects.filter(idname=slug).exists():
@@ -117,18 +114,19 @@ class CommentForm(ModelForm):
 
 class ProfileForm(ModelForm):
 
-	def save(self, user):
-		reguser = RegUser.objects.get(user=user)
-		reguser.about = self.cleaned_data['about']
-
-		print(self.cleaned_data)
-
-		if(self.cleaned_data['profile_image']):
-			reguser.profile_image.delete()
-			reguser.profile_image = self.cleaned_data['profile_image']
-
-		reguser.save()
-
 	class Meta:
 		model = RegUser
 		fields = ['about', 'profile_image']
+
+class ProjectForm(ModelForm):
+
+	class Meta:
+		model = Project
+		fields = ['name', 'description', 'maptype', 'version', 'thumbnail', 'file']
+		help_texts = {
+			'name': 'The name of your map',
+			'description': 'Provide a description of your map, the uploaded thumbnail will show up above the description',
+			'version': '(Optional) Provide a version in your own format so that people know when your map has updated',
+			'thumbnail': 'Upload a thumbnail which will show up on the frontpage, the list and on the project description (allowed file types: jpg,png)',
+			'file': 'Upload a zip file with your project files (only zip files allowed)'
+		}
