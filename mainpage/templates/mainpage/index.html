@@ -22,132 +22,133 @@
 	</head>
 	<body>
 		{% block header %}
-		<header class="navbar navbar-default">
-			<section class="container">
-				<section class="navbar-header">
-					<a href="{% url 'index' %}" class="navbar-brand">
-						Cobalt Vault
-					</a>
-					<a class="navbar-toggle" data-toggle="collapse" data-target="#header-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</a>
-				</section>
-				<nav class="navbar-collapse collapse" id="header-collapse">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="{% url 'index' %}">{% bootstrap_icon 'home' %}</a></li>
-						<li><a href="https://forum.cobaltvault.no">Cobalt Forum</a></li>
-						<li><a href="{% url 'list' %}">Projects</a></li>
-						{% if user.is_authenticated %}
-						<li class="dropdown">
-							<a href="#" data-toggle="dropdown">{{ user.username }} <span class="caret"/></a>
-							<ul class="dropdown-menu">
-								<li><a href="{% url 'profile' user.username %}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-								<li><a href="{% url 'project_create' %}"><span class="glyphicon glyphicon-plus"></span> Create Project</a></li>
-								<li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-							</ul>
-						</li>
-						{% endif %}
-						<li class="dropdown">
-							<a href="#" data-toggle="dropdown">Help <span class="caret" /></a>
-							<ul class="dropdown-menu">
-								<li><a target="_blank" href="https://github.com/Northcodeno/cobaltvault.no">Source code</a></li>
-								<li class="divider"></li>
-								<li><a target="_blank" href="http://northcode.no">Northcode</a></li>
-								<li class="divider"></li>
-								<li><a target="_blank" href="http://playcobalt.com">Cobalt Homepage</a></li>
-								<li><a target="_blank" href="http://oxeyegames.com">Oxeye Games</a></li>
-							</ul>
-						</li>
-					</ul>
-				</nav>
-			</section>
-		</header>
-		{% endblock %}
-		
-		<section class="container" id="pagecontent">
-			{% block messages %}
-				{% bootstrap_messages %}
-			{% endblock %}
-			{% block content %}
-			<section class="col-md-8">
-				{% block main %}
-				<h2>Most downloaded</h2>
-				<div id="carousel-maps" class="carousel slide" data-ride="carousel">
-					<ol class="carousel-indicators">
-						{% for project in mostdl %}
-						<li data-target="#carousel-maps" data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}active="true"{% endif %}></li>
-						{% endfor %}
-					</ol>
-					
-					<div class="embed-responsive embed-responsive-16by9">
-						<div class="carousel-inner embed-responsive-item">
-							{% for project in mostdl %}
-							<div class="item {% if forloop.first %}active{% endif %}">
-								<a href="{% url 'project' project.idname %}"><img src="{{ project.thumbnail | thumbnail_url:'large' }}" alt="{{ project.name }}"></a>
-								<div class="carousel-caption">
-									<h3><a href="{% url 'project' project.idname %}">{{ project.name }}</a></h3>
-								</div>
-							</div>
-							{% endfor %}
-						</div>
-						
-						<a class="left carousel-control" href="#carousel-maps" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-            					<a class="right carousel-control" href="#carousel-maps" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-            				</div>
-            			</div>
-				
-            	<div class="well" style="margin-top:10px;">
-                    <p>Upload your map today!</p>
-                    <a href="{% url 'project_create' %}" class="btn btn-primary">Create Project</a>
-
-                </div>
-
-				<section id="news">
-					<h2>News</h2>
-					{% if user.is_staff %}
-					<form method="post" action="{% url 'index' %}" role="form">
-						{% csrf_token %}
-						{% bootstrap_form newsform %}
-						<input type="submit" class="btn btn-primary" value="Post">
-					</form>
-					{% endif %}
-					<section id="newsposts">
-						{% for post in news %}
-						<article class="newspost">
-							<h3>{{post.title}}</h3>
-							<p>{{post.text|markdown}}</p>
-							<em>{{post.date|date:"Y.m.d"}}</em>
-						</article>
-						{% endfor %}
+		<div id="wrap">
+			<header class="navbar navbar-default">
+				<section class="container">
+					<section class="navbar-header">
+						<a href="{% url 'index' %}" class="navbar-brand">
+							Cobalt Vault
+						</a>
+						<a class="navbar-toggle" data-toggle="collapse" data-target="#header-collapse">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</a>
 					</section>
+					<nav class="navbar-collapse collapse" id="header-collapse">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="{% url 'index' %}">{% bootstrap_icon 'home' %}</a></li>
+							<li><a href="https://forum.cobaltvault.no">Cobalt Forum</a></li>
+							<li><a href="{% url 'list' %}">Projects</a></li>
+							{% if user.is_authenticated %}
+							<li class="dropdown">
+								<a href="#" data-toggle="dropdown">{{ user.username }} <span class="caret"/></a>
+								<ul class="dropdown-menu">
+									<li><a href="{% url 'profile' user.username %}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+									<li><a href="{% url 'project_create' %}"><span class="glyphicon glyphicon-plus"></span> Create Project</a></li>
+									<li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+								</ul>
+							</li>
+							{% endif %}
+							<li class="dropdown">
+								<a href="#" data-toggle="dropdown">Help <span class="caret" /></a>
+								<ul class="dropdown-menu">
+									<li><a target="_blank" href="https://github.com/Northcodeno/cobaltvault.no">Source code</a></li>
+									<li class="divider"></li>
+									<li><a target="_blank" href="http://northcode.no">Northcode</a></li>
+									<li class="divider"></li>
+									<li><a target="_blank" href="http://playcobalt.com">Cobalt Homepage</a></li>
+									<li><a target="_blank" href="http://oxeyegames.com">Oxeye Games</a></li>
+								</ul>
+							</li>
+						</ul>
+					</nav>
 				</section>
-				
+			</header>
+			{% endblock %}
+			
+			<section class="container" id="pagecontent">
+				{% block messages %}
+					{% bootstrap_messages %}
+				{% endblock %}
+				{% block content %}
+				<section class="col-md-8">
+					{% block main %}
+					<h2>Most downloaded</h2>
+					<div id="carousel-maps" class="carousel slide" data-ride="carousel">
+						<ol class="carousel-indicators">
+							{% for project in mostdl %}
+							<li data-target="#carousel-maps" data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}active="true"{% endif %}></li>
+							{% endfor %}
+						</ol>
+						
+						<div class="embed-responsive embed-responsive-16by9">
+							<div class="carousel-inner embed-responsive-item">
+								{% for project in mostdl %}
+								<div class="item {% if forloop.first %}active{% endif %}">
+									<a href="{% url 'project' project.idname %}"><img src="{{ project.thumbnail | thumbnail_url:'large' }}" alt="{{ project.name }}"></a>
+									<div class="carousel-caption">
+										<h3><a href="{% url 'project' project.idname %}">{{ project.name }}</a></h3>
+									</div>
+								</div>
+								{% endfor %}
+							</div>
+							
+							<a class="left carousel-control" href="#carousel-maps" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+	            					<a class="right carousel-control" href="#carousel-maps" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+	            				</div>
+	            			</div>
+					
+	            	<div class="well" style="margin-top:10px;">
+	                    <p>Upload your map today!</p>
+	                    <a href="{% url 'project_create' %}" class="btn btn-primary">Create Project</a>
+
+	                </div>
+
+					<section id="news">
+						<h2>News</h2>
+						{% if user.is_staff %}
+						<form method="post" action="{% url 'index' %}" role="form">
+							{% csrf_token %}
+							{% bootstrap_form newsform %}
+							<input type="submit" class="btn btn-primary" value="Post">
+						</form>
+						{% endif %}
+						<section id="newsposts">
+							{% for post in news %}
+							<article class="newspost">
+								<h3>{{post.title}}</h3>
+								<p>{{post.text|markdown}}</p>
+								<em>{{post.date|date:"Y.m.d"}}</em>
+							</article>
+							{% endfor %}
+						</section>
+					</section>
+					
+					{% endblock %}
+				</section>
+
+				<aside class="col-md-4">
+					{% include 'login/login.html' %}
+					{% block sidebar %}
+					<h2>Latest Updates</h2>
+					{% for project in latest %}
+					<div class="thumbnail item">
+						<a href="{% url 'project' project.idname %}">
+							<img src="{{ project.thumbnail.small.url }}" alt="{{ project.name }}">
+						</a>
+						<h3><a href="{% url 'project' project.idname %}">{{ project.name }}</a></h3>
+						<p>
+							{{ project.description | markdown | truncatewords_html:15 }}
+						</p>
+					</div>
+					
+					{% endfor %}
+					{% endblock %}
+				</aside>
 				{% endblock %}
 			</section>
-
-			<aside class="col-md-4">
-				{% include 'login/login.html' %}
-				{% block sidebar %}
-				<h2>Latest Updates</h2>
-				{% for project in latest %}
-				<div class="thumbnail item">
-					<a href="{% url 'project' project.idname %}">
-						<img src="{{ project.thumbnail.small.url }}" alt="{{ project.name }}">
-					</a>
-					<h3><a href="{% url 'project' project.idname %}">{{ project.name }}</a></h3>
-					<p>
-						{{ project.description | markdown | truncatewords_html:15 }}
-					</p>
-				</div>
-				
-				{% endfor %}
-				{% endblock %}
-			</aside>
-			{% endblock %}
-		</section>
-		<div class="spacer"></div>
+		</div>
 
 		<nav class="navbar navbar-default navbar-static-top footer">
 			<div class="container">
