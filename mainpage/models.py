@@ -21,10 +21,10 @@ class ProjectMapType(models.Model):
 
 class RegUser(models.Model):
     user = models.OneToOneField(User)
-    activation_key = models.CharField(max_length=255)
+    activation_key = models.CharField(max_length=255, null=True)
     profile_image = ThumbnailerImageField(upload_to="profile_images/",resize_source=dict(size=(500,500)), null=True, blank=True)
     date_registered = models.DateField(auto_now_add=True)
-    about = models.TextField(default="I'm a metalface")
+    about = models.TextField(default="I'm a metalface", null=True, blank=True)
 
 class Project(models.Model):
     idname = models.SlugField()
