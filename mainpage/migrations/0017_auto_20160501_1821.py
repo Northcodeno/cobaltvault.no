@@ -42,6 +42,4 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-    	migrations.RunPython(import_users)
-
     ]
