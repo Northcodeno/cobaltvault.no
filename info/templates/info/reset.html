@@ -1,0 +1,29 @@
+{% extends "mainpage/index.html" %}
+{% load bootstrap3 staticfiles %}
+
+{% block head %}
+<title>Password Reset</title>
+{% endblock %}
+
+{% block content %}
+
+<h1>Reset your Password</h1>
+
+<section class="col-md-6">
+
+<form action="" role="form" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+
+	<input type="submit" class="btn btn-primary" value="Submit">
+</form>
+
+</section>
+
+<section class="col-md-6">
+	<div class="alert alert-warning">
+		Users who registered before the <b>1st of May 2016</b> will have to reset their password once. The reason for this is a change in the storage structure of our backend. We use a new more secure hashing algorithm and as we can't read/view your old passwords we can't convert them by ourselves. If you have any questions contact <a href="mailto:jens@northcode.no">Jens "jens@northcode.no"</a>.
+	</div>
+</section>
+
+{% endblock %}

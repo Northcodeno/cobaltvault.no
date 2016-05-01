@@ -1,0 +1,6 @@
+Hello {{ user.username }}
+
+Someone requested a password reset for your account. To continue click this link:
+{{ protocol}}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}
+
+Greetings, the Cobaltvault Staff

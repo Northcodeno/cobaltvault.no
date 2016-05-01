@@ -150,6 +150,21 @@ THUMBNAIL_ALIASES = {
 }
 
 
+# Email server 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 25
+
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+
+DEFAULT_FROM_EMAIL = 'Cobaltvault (NC) <info@northcode.no>'
+
+# ReCaptcha
+
 RECAPTCHA_PUBLIC_KEY = "6Lf4EM8SAAAAAKY7-rve1EqkpdzkF6HH0z1pkRh6"
 RECAPTCHA_PRIVATE_KEY = "6Lf4EM8SAAAAAO4Ko5GvfSi-nwr4PLHJOnp0go-6"
 NOCAPTCHA = True
