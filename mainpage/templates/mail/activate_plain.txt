@@ -1,0 +1,5 @@
+Hello {{ username }}
+You registered at our page cobaltvault.no and will need to activate your account. Open this link in your browser and you're done!
+{{ url }}
+
+Greetings, the Cobaltvault Staff
