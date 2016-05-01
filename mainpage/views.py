@@ -18,11 +18,11 @@ from django.utils.encoding import smart_str
 from django.utils.translation import ungettext_lazy
 from django.views.generic.list import ListView
 from django_tables2 import RequestConfig
-from info.models import NewsPost
 from info.forms import NewsForm
+from info.models import NewsPost
 from wsgiref.util import FileWrapper
 
-from .forms import CommentForm, CreateForm, RegForm, ProfileForm, ProjectForm
+from .forms import CommentForm, CreateForm, ProfileForm, ProjectForm, RegForm
 from .models import Comment, Project, RegUser
 from .tables import ProjectTable, UserProjectTable
 from .util import safeRedirect
@@ -60,7 +60,7 @@ def project(request, project_id):
 	else:
 		project = get_object_or_404(Project, idname=project_id)
 
-	context = {'project': project}
+	context = {'project': project, 'isauthor': False}
 
 	if request.user.is_authenticated():
 		if request.method == 'POST':
@@ -74,11 +74,10 @@ def project(request, project_id):
 				messages.success(request, 'Your comment has been submitted')
 		context['form'] = CommentForm()
 
-	context['comments'] = Comment.objects.filter(project=project, replyto=None)
+		if request.user.project_set.filter(pk=project.pk).exists():
+			context['isauthor'] = True
 
-	context['isauthor'] = False
-	if request.user.is_authenticated and request.user.project_set.filter(pk=project.pk).exists():
-		context['isauthor'] = True
+	context['comments'] = Comment.objects.filter(project=project, replyto=None)
 
 	return render(request, "mainpage/project.html", context)
 
