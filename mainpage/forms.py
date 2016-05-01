@@ -37,10 +37,10 @@ class RegForm(forms.Form):
 		u = User.objects.create_user(data['username'], data['email'], data['password1'])
 		u.is_active = False
 		u.save()
-		yuki = RegUser()
-		yuki.user = u
-		yuki.activation_key = data['activation_key']
-		yuki.save()
+		ru = RegUser()
+		ru.user = u
+		ru.activation_key = data['activation_key']
+		ru.save()
 		return u
 
 	def send_email(self, data):

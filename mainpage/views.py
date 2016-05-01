@@ -155,12 +155,13 @@ def register_view(request):
 
 	return render(request, "mainpage/register.html", {'form': form})
 
-def activate(request, activation_id):
+def activate(request, activation_key):
 	try:
-		yuki = RegUser.objects.get(activation_id=activation_id)
-		if yuki.user.is_active == False:
-			yuki.user.is_active == True
-			yuki.user.save()
+		ru = RegUser.objects.get(activation_key=activation_key)
+		print(ru.user)
+		if ru.user.is_active == False:
+			ru.user.is_active = True
+			ru.user.save()
 			messages.success(request, 'Your account has been successfully activated. You can log in now')
 		else:
 			messages.warning(request, 'Your account is already activated')
