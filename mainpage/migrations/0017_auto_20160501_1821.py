@@ -26,12 +26,16 @@ def import_users(apps, schema_editor):
 		users = cn.fetchall()
 
 		for user in users:
-			uobj = User.objects.create_user(user[0], user[1], rand_generator())
-			if user[3]:
-				ru = RegUser.objects.create(user=uobj, about=user[2], date_registered=user[3])
-			else:
-				ru = RegUser.objects.create(user=uobj, about=user[2])
-			ru.save()
+			try:
+				uobj = User.objects.create_user(user[0], user[1], rand_generator())
+				if user[3]:
+					ru = RegUser.objects.create(user=uobj, about=user[2], date_registered=user[3])
+				else:
+					ru = RegUser.objects.create(user=uobj, about=user[2])
+				ru.save()
+			except:
+				print("Could not add user " + user[0])
+				
 	else:
 		print("Could not connect to db, ignoring")
 
