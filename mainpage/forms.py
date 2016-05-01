@@ -11,6 +11,7 @@ from django.template import Context
 from django.template.defaultfilters import slugify
 from django_markdown.widgets import MarkdownWidget
 from mainpage.models import RegUser
+from django.template.loader import render_to_string
 
 from .models import Comment, Project, RegUser
 from .util import MarkdownBlackList
@@ -44,10 +45,11 @@ class RegForm(forms.Form):
 		return u
 
 	def send_email(self, data):
-		"""link = "https://cobaltvault.no/activate/" + data['activation_key']
+		link = "https://cobaltvault.no/activate/" + data['activation_key']
 		c = Context({'url': link, 'username': data['username']})
 		text = render_to_string("mail/activate.html", c)
-		send_mail('Activate your account on cobaltvault', text, 'Cobaltvault (NC) <info@northcode.no>', [data['email']], fail_silently=False)"""
+		plaintext = render_to_string("mail/activate_plain.txt", c)
+		send_mail(subject = 'Activate your account on cobaltvault', message = plaintext, html_message = text, from_email = DEFAULT_FROM_EMAIL, recipient_list = [data['email']], fail_silently=False)
 		return
 
 class CreateForm(ModelForm):
