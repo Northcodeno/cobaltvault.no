@@ -49,7 +49,7 @@ def index(request):
 	return render(request, "mainpage/index.html", context)
 
 def list(request):
-	table = ProjectTable(Project.objects.all())
+	table = ProjectTable(Project.objects.filter(ispublic=True))
 	table.paginate(page=request.GET.get('page',1), per_page=25)
 	RequestConfig(request).configure(table)
 	return render(request, "mainpage/list.html", {'table': table })
