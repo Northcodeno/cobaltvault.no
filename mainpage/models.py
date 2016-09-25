@@ -26,6 +26,9 @@ class RegUser(models.Model):
     date_registered = models.DateField(auto_now_add=True)
     about = models.TextField(default="I'm a metalface", null=True, blank=True)
 
+    def __str__(self):
+        return self.user.name
+
 class Project(models.Model):
     idname = models.SlugField()
     name = models.CharField(max_length=40, unique=True)
@@ -67,6 +70,9 @@ class Comment(models.Model):
     project = models.ForeignKey(Project)
     replyto = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     
+    def __str(self):
+        return 'Comment on: ' + self.project.name
+
     def get_replies(self):
         return Comment.objects.filter(project=self.project, replyto=self)
 
