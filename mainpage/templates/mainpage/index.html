@@ -139,7 +139,7 @@
 						</a>
 						<h3><a href="{% url 'project' project.idname %}">{{ project.name }}</a></h3>
 						<p>
-							{{ project.description | markdown | truncatewords_html:15 }}
+							{{ project.description | markdown | striptags | truncatewords_html:15 }}
 						</p>
 					</div>
 					
