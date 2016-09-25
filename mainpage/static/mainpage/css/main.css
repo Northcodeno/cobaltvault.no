@@ -33,3 +33,11 @@ html, body {
 .navbar {
 	border-radius: 0;
 }
+
+.markItUp {
+	width: 100% !important;
+}
+
+.markItUpEditor {
+	width: 100% !important;
+}

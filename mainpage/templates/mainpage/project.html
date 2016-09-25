@@ -11,7 +11,6 @@
 {% block content %}
 <section class="col-md-9 project-content">
 	<h1>{{ project.name }}</h1>
-	<img src="{{ project.thumbnail | thumbnail_url:'large' }}" alt="Project Image" class="project-image" />
 	
 	<div id="project-content">
 		{{ project.description | markdown }}
@@ -60,6 +59,8 @@
 			<td>{{ project.get_pretty_authors }}</td>
 		</tr>
 	</table>
+	<h3>Thumbnail</h3>
+	<a href="{{ project.thumbnail | thumbnail_url:'large' }}"><img src="{{ project.thumbnail | thumbnail_url:'large' }}" alt="Project Image" class="project-image" /></a>
 	{% if isauthor %}
 	<a href="{% url 'project_edit' project.id %}" class="btn btn-warning btn-block">Edit</a>
 	{% endif %}

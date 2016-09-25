@@ -1,7 +1,9 @@
-import re, bleach
+import re
+import bleach
 
 from captcha.fields import ReCaptchaField
 from django import forms
+from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
@@ -9,18 +11,19 @@ from django.core.validators import validate_email, validate_slug
 from django.forms import ModelForm
 from django.template import Context
 from django.template.defaultfilters import slugify
+from django.template.loader import render_to_string
 from django_markdown.widgets import MarkdownWidget
 from mainpage.models import RegUser
-from django.template.loader import render_to_string
 
 from .models import Comment, Project, RegUser
 from .util import MarkdownBlackList
 
+
 class RegForm(forms.Form):
 	username = forms.CharField(label="Username", max_length=30, min_length=3, validators=[validate_slug])
 	email = forms.EmailField(label="Email",max_length=100, error_messages={'invalid': ("Invalid email.")},validators=[validate_email])
-	password1 = forms.CharField(label="Password",max_length=50,min_length=6)
-	password2 = forms.CharField(label="Confirm Password",max_length=50,min_length=6)
+	password1 = forms.CharField(label="Password",max_length=50,min_length=6, widget=forms.PasswordInput())
+	password2 = forms.CharField(label="Confirm Password",max_length=50,min_length=6, widget=forms.PasswordInput())
 	captcha = ReCaptchaField()
 
 	def clean(self):
@@ -49,7 +52,7 @@ class RegForm(forms.Form):
 		c = Context({'url': link, 'username': data['username']})
 		text = render_to_string("mail/activate.html", c)
 		plaintext = render_to_string("mail/activate_plain.txt", c)
-		send_mail(subject = 'Activate your account on cobaltvault', message = plaintext, html_message = text, from_email = DEFAULT_FROM_EMAIL, recipient_list = [data['email']], fail_silently=False)
+		send_mail(subject = 'Activate your account on cobaltvault', message = plaintext, html_message = text, from_email = settings.DEFAULT_FROM_EMAIL, recipient_list = [data['email']], fail_silently=False)
 		return
 
 class CreateForm(ModelForm):
@@ -81,6 +84,7 @@ class CreateForm(ModelForm):
 			version=self.cleaned_data['version'],
 			thumbnail=self.cleaned_data['thumbnail'],
 			file=self.cleaned_data['file'])
+		proj.author.add(user)
 		proj.save()
 
 		return proj
