@@ -10,7 +10,7 @@
 	</div>
 	<div class="media-body">
 		<h4 class="media-heading">{{ comment.author.username }}</h4>
-		{{ comment.message }}
+		{{ comment.message | markdown | strip_tags }}
 		{% if user.is_authenticated %}
 		<br>
 		<a class="btn btn-xs btn-default commentbtn" replyid="{{ comment.pk }}" replyname="{{ comment.author.username }}" role="button" href="#comment" value="Reply">Reply</a>

@@ -1,3 +1,3 @@
 {% load django_markdown %}
 <b><a href="{% url 'project' project.idname %}">{{ project.name }}</a></b>
-<p>{{ project.description | markdown }}</p>
+<p>{{ project.description | markdown | striptags}}</p>
