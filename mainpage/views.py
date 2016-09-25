@@ -32,7 +32,7 @@ from .util import safeRedirect
 def index(request):
 	latest = Project.objects.order_by('-date_modified')[:5]
 	mostdl = Project.objects.order_by('-downloads')[:5]
-	news = NewsPost.objects.all()[:5]
+	news = NewsPost.objects.all()[5:]
 
 	context = { 'latest': latest, 'mostdl': mostdl, 'news': news }
 
