@@ -1,3 +1,4 @@
-#project-content img {
+#project-content img,
+.project-image {
 	max-width: 100%;
 }

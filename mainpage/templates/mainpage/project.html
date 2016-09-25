@@ -11,7 +11,7 @@
 {% block content %}
 <section class="col-md-9 project-content">
 	<h1>{{ project.name }}</h1>
-	<img src="{{ project.thumbnail | thumbnail_url:'large' }}" />
+	<img src="{{ project.thumbnail | thumbnail_url:'large' }}" alt="Project Image" class="project-image" />
 	
 	<div id="project-content">
 		{{ project.description | markdown }}
