@@ -29,3 +29,7 @@ html, body {
 	clear: both;
 	bottom: 0;
 }
+
+.navbar {
+	border-radius: 0;
+}
