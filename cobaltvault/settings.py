@@ -47,6 +47,8 @@ INSTALLED_APPS = [
 
     'mainpage',
     'info',
+
+    'legacy',
 ]
 
 MIDDLEWARE_CLASSES = [

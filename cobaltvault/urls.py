@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r"^", include("mainpage.urls")),
     url(r"^", include("info.urls")),
+    url(r"^", include("legacy.urls")),
     url(r"^markdown/", include("django_markdown.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
