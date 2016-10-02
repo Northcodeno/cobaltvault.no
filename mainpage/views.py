@@ -30,7 +30,7 @@ from .util import safeRedirect
 
 # Create your views here.
 def index(request):
-	latest = Project.objects.order_by('-date_modified')[:5]
+	latest = Project.objects.order_by('-date_modified', '-date_created')[:5]
 	mostdl = Project.objects.order_by('-downloads')[:5]
 	news = NewsPost.objects.order_by('-id')[:5]
 

@@ -15,11 +15,10 @@
                 <thead>
                 <tr>
                     {% for column in table.columns %}
-                        <th {{ column.attrs.th.as_html }}>
-                        {{ column.header }}
                         {% if column.orderable %}
-                            <br><a class="btn btn-xs btn-default" href="{% querystring table.prefixed_order_by_field=column.order_by_alias %}"><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span></a>
-                            <a class="btn btn-xs btn-default" href="{% querystring table.prefixed_order_by_field=column.order_by_alias.opposite %}"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span></a>
+                        <th {{ column.attrs.th.as_html }}><a href="{% querystring table.prefixed_order_by_field=column.order_by_alias.next %}">{{ column.header }}</a></th>
+                        {% else %}
+                        <th {{ column.attrs.th.as_html }}>{{ column.header }}</th>
                         {% endif %}
                         </th>
                     {% endfor %}
